@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
+
 public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private ArrayList<Avion> avions; 
     private Timer timer;
@@ -59,7 +60,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public void actionPerformed(ActionEvent e){
          for(Avion av: avions){
              av.avancer();
-             for(Bombe b:av.listebombe){
+             /*for(Bombe b:av.listebombe){
                  if(b!=null){
                      b.tombe();
                      if(b.estsorti()){
@@ -68,9 +69,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                      }
                      
                 }
-         repaint();
-            }
-        }
+         
+            }*/
+        }repaint();
     }
     
     public void keyPressed(KeyEvent e){
