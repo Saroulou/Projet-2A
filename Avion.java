@@ -32,7 +32,7 @@ public class Avion {
     }
     
     public void dessine(Graphics g){
-        int r = 50;
+        int r = 30;
         g.setColor(new Color (243,149,70));
         g.fillPolygon(
             new int[]{(int)(x+r*Math.cos(Math.toRadians(vtheta))),(int)(x+r*Math.cos(Math.toRadians(vtheta+120))),(int)(x+r*Math.cos(Math.toRadians(vtheta-120)))},

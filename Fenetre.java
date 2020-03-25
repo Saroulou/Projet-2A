@@ -40,7 +40,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         addKeyListener(this);
     }
     public Fenetre(){
-        this("Skywar",2000,1000);
+        this("Skywar",1000,700);
     }
 
     public void paint (Graphics g){
