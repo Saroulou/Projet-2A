@@ -3,3 +3,7 @@ git pull
 git push
 git commit -m "[description de la modification]"
 git status
+git add .
+
+javac -sourcepath . Main.java
+Java Main
