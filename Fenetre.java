@@ -6,12 +6,15 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.util.ArrayList; 
-
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private ArrayList<Avion> avions; 
     private Timer timer;
     private final int var=100;
+     private BufferedImage image= null;
     public Fenetre(String nom, int width, int height){
         
         super(nom);
@@ -26,6 +29,12 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         avions.add(new Avion(getHeight(),getWidth()));
         timer=new Timer(var, this);
         timer.start();
+        try {
+        image = ImageIO.read(new File("Background.jpg"));
+    }
+    catch (IOException e){
+        e.printStackTrace();
+    }
         
         addKeyListener(this);
     }
@@ -34,6 +43,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     }
     
     public void paint (Graphics g){
+		g.drawImage(image,0,0,null);
       g.setColor(new Color (100,20,70));
         g.fillRect(0,0,this.getWidth(),this.getHeight());
         for(Avion av: avions){
