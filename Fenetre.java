@@ -1,31 +1,31 @@
 import javax.swing.*;
-import java.awt.event.*; 
+import java.awt.event.*;
 import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
 
 public class Fenetre extends JFrame implements ActionListener, KeyListener{
-    private ArrayList<Avion> avions; 
+    private ArrayList<Avion> avions;
     private Timer timer;
     private final int var=100;
      private BufferedImage image= null;
     public Fenetre(String nom, int width, int height){
-        
+
         super(nom);
-       
+
         setSize(width, height);
         setLocation(200,200);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null); 
-        
+        setLayout(null);
+
         avions=new ArrayList<Avion>();
         avions.add(new Avion(getHeight(),getWidth()));
         timer=new Timer(var, this);
@@ -36,27 +36,27 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     catch (IOException e){
         e.printStackTrace();
     }
-        
+
         addKeyListener(this);
     }
     public Fenetre(){
         this("Skywar",2000,1000);
     }
-    
+
     public void paint (Graphics g){
-		g.drawImage(image,0,0,null);
+        g.drawImage(image,0,0,null);
       g.setColor(new Color (100,20,70));
-        g.fillRect(0,0,this.getWidth(),this.getHeight());
+        //g.fillRect(0,0,this.getWidth(),this.getHeight());
         for(Avion av: avions){
             av.dessine(g);
             for(Bombe b:av.listebombe){
                  if(b!=null){
                      b.dessine(g);
                 }
-            }   
+            }
         }
     }
-    
+
     public void actionPerformed(ActionEvent e){
          for(Avion av: avions){
              av.avancer();
@@ -65,37 +65,37 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                      b.tombe();
                      if(b.estsorti()){
                          av.listebombe.remove(b);
-                         
+
                      }
-                     
+
                 }
-         
+
             }*/
         }repaint();
     }
-    
+
     public void keyPressed(KeyEvent e){
         int code = e.getKeyCode();
-        
+
         if(code==KeyEvent.VK_LEFT){
             avions.get(0).tourner(-10);
-            
+
         }else if(code == KeyEvent.VK_RIGHT){
-            
+
             avions.get(0).tourner(10);
-            
+
         }else if(code==KeyEvent.VK_RIGHT){
         avions.get(0).tirerBombe();
         }
     }
-        
-        
-        
+
+
+
     public void keyReleased(KeyEvent e){}
     public void keyTyped(KeyEvent e){}
-    
-    
-    
-} 
-   
+
+
+
+}
+
 

@@ -1,7 +1,7 @@
 git clone [url du github]
 git pull
 git push
-git commit -m "[description de la modification]"
+git commit -a -m "[description de la modification]"
 git status
 git add .
 
