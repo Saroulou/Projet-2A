@@ -1,6 +1,11 @@
 import javax.swing.*;
+import java.awt.event.*; 
 import java.awt.*;
- 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import java.util.ArrayList; 
 
 public class Avion {
 	private double x; //position
@@ -9,14 +14,17 @@ public class Avion {
     private double vtheta;//degres
     private int h; //hauteur fenetre 
     private int l;
+    public ArrayList <Bombe> listebombe;
 	
     public Avion (double x, double y, double vr, double vtheta, int h, int l) {
 		this.x=x;
         this.y=y;
         this.vr=vr;
         this.vtheta=vtheta;
-        this.h = h;
+        this.h = h; 
         this.l = l;
+        listebombe=new ArrayList<Bombe>();
+        //bombe.add(new Bombe(this.x, this.y,getHeight(),getWidth()));
 	}
     
     public Avion(int h, int l){
@@ -44,7 +52,10 @@ public class Avion {
         
     }
     
-    
-    
+    public void tirerBombe(){
+        Bombe bombe=new Bombe(this.x, this.y,h,l);
+        listebombe.add(bombe);
+    }
+
 }
 

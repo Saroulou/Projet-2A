@@ -38,14 +38,29 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         g.fillRect(0,0,this.getWidth(),this.getHeight());
         for(Avion av: avions){
             av.dessine(g);
-        }   
+            for(Bombe b:av.listebombe){
+                 if(b!=null){
+                     b.dessine(g);
+                }
+            }   
+        }
     }
     
     public void actionPerformed(ActionEvent e){
          for(Avion av: avions){
              av.avancer();
-         }
+             for(Bombe b:av.listebombe){
+                 if(b!=null){
+                     b.tombe();
+                     if(b.estsorti()){
+                         av.listebombe.remove(b);
+                         
+                     }
+                     
+                }
          repaint();
+            }
+        }
     }
     
     public void keyPressed(KeyEvent e){
@@ -58,9 +73,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             
             avions.get(0).tourner(10);
             
+        }else if(code==KeyEvent.VK_RIGHT){
+        avions.get(0).tirerBombe();
         }
-        
-        
     }
         
         
