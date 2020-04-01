@@ -9,4 +9,5 @@ javac -sourcepath . Main.java
 Java Main
 rm -rf ./*.tmp
 
-rm -rf ./*.tmp ; git commit -a -m "[description de la modification]" ; git push
+javac -sourcepath . Main.java && Java Main
+rm -rf ./*.tmp && git commit -a -m "[description de la modification]" && git push
