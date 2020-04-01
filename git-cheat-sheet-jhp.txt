@@ -7,3 +7,5 @@ git add .
 
 javac -sourcepath . Main.java
 Java Main
+rm -rf ./*.tmp
+
