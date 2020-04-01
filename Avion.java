@@ -5,16 +5,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.LinkedList; 
 
 public class Avion {
-	private double x; //position
-    private double y;
-    private double vr;//vitesse
-    private double vtheta;//degres
+	protected double x; //position
+    protected double y;
+    protected double vr;//vitesse
+    protected double vtheta;//degres
     private int h; //hauteur fenetre 
     private int l;
+    protected int nbMissiles = 0;
+    protected final int nbMaxMissiles = 5;
     public ArrayList <Bombe> listebombe;
+    public LinkedList <Missiles> missiles; 
 	
     public Avion (double x, double y, double vr, double vtheta, int h, int l) {
 		this.x=x;
@@ -55,6 +59,16 @@ public class Avion {
     public void tirerBombe(){
         Bombe bombe=new Bombe(this.x, this.y,h,l);
         listebombe.add(bombe);
+    }
+    
+    public void tirerMissiles() {
+    	
+    	if(nbMissiles<nbMaxMissiles) {
+    	Missiles missile = new Missiles(x,y,2*vr,2*vtheta,h,l);
+    	missiles.add(missile);
+    	nbMissiles++;
+    	}
+    	
     }
 
 }
