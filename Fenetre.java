@@ -12,6 +12,7 @@ import java.io.*;
 
 
 public class Fenetre extends JFrame implements ActionListener, KeyListener{
+	
     private ArrayList<Avion> avions;
     private Timer timer;
     private final int var=100;
