@@ -12,7 +12,7 @@ import java.io.*;
 
 
 public class Fenetre extends JFrame implements ActionListener, KeyListener{
-	
+
     private ArrayList<Avion> avions;
     private Timer timer;
     private final int var=100;
@@ -27,11 +27,11 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
-        avions=new ArrayList<Avion>();
-        avions.add(new Avion(getHeight(),getWidth()));
-
         timer=new Timer(var, this);
         timer.start();
+
+        avions=new ArrayList<Avion>();
+        avions.add(new Avion(getHeight(),getWidth()));
 
         try {
             image = ImageIO.read(new File("Background.jpg"));
@@ -60,15 +60,11 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                      b.dessine(g);
                 }
             }
-        }
-        for(Avion av: avions){
-            av.dessine(g);
-            /*
             for (Missiles m: av.missiles) {
                 if (m != null)
                 m.dessine(g);
 
-            }*/
+            }
         }
     }
 
@@ -77,24 +73,22 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public void actionPerformed(ActionEvent e){
          for(Avion av: avions){
             av.avancer();
-             /*for(Bombe b:av.listebombe){
-                 if(b!=null){
-                     b.tombe();
-                     if(b.estsorti()){
-                         av.listebombe.remove(b);
+            for(Bombe b:av.listebombe){
+                if(b!=null){
+                    b.tombe();
+                    if(b.estsorti()){
+                        av.listebombe.remove(b);
 
-                     }
+                    }
 
                 }
 
-            }*/
-            av.avancer();
-            /*
+            }
             for (Missiles m: av.missiles) {
                 if (m != null)
-            m.avancer();
+                    m.avancer();
 
-            }*/
+            }
         }
         repaint();
     }
