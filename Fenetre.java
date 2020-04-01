@@ -15,30 +15,35 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private ArrayList<Avion> avions;
     private Timer timer;
     private final int var=100;
-     private BufferedImage image= null;
+    private BufferedImage image= null;
+
     public Fenetre(String nom, int width, int height){
 
         super(nom);
 
         setSize(width, height);
         setLocation(200,200);
-        setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
         avions=new ArrayList<Avion>();
         avions.add(new Avion(getHeight(),getWidth()));
+
         timer=new Timer(var, this);
         timer.start();
+
         try {
-        image = ImageIO.read(new File("Background.jpg"));
-    }
-    catch (IOException e){
-        e.printStackTrace();
-    }
+            image = ImageIO.read(new File("Background.jpg"));
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
 
         addKeyListener(this);
+
+        setVisible(true);
     }
+
     public Fenetre(){
         this("Skywar",1000,700);
     }
@@ -54,22 +59,23 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                      b.dessine(g);
                 }
             }
-        }        
+        }
         for(Avion av: avions){
             av.dessine(g);
+            /*
             for (Missiles m: av.missiles) {
-            	if (m != null)
-            	m.dessine(g);
-            
-            }
+                if (m != null)
+                m.dessine(g);
+
+            }*/
         }
     }
 
-        
-        
+
+
     public void actionPerformed(ActionEvent e){
          for(Avion av: avions){
-             av.avancer();
+            av.avancer();
              /*for(Bombe b:av.listebombe){
                  if(b!=null){
                      b.tombe();
@@ -81,15 +87,15 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 }
 
             }*/
-             for(Avion avion: avions){
-                 av.avancer();
-                 for (Missiles m: avion.missiles) {
-                	 if (m != null)
-                 	m.avancer();
-                 
-                 }
-             }
-        }repaint();
+            av.avancer();
+            /*
+            for (Missiles m: av.missiles) {
+                if (m != null)
+            m.avancer();
+
+            }*/
+        }
+        repaint();
     }
 
     public void keyPressed(KeyEvent e){
@@ -105,9 +111,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         }else if(code==KeyEvent.VK_RIGHT){
         avions.get(0).tirerBombe();
         }if(code == KeyEvent.VK_SPACE) {
-        	avions.get(0).tirerMissiles();
-        	
-        }       
+            avions.get(0).tirerMissiles();
+
+        }
     }
 
 
