@@ -67,7 +67,7 @@ public class Avion {
     public void tirerMissiles() {
 
         if(nbMissiles<nbMaxMissiles) {
-            Missiles missile = new Missiles(x,y,2*vr,2*vtheta,h,l);
+            Missiles missile = new Missiles(x,y,2*vr,vtheta,h,l);
             missiles.add(missile);
             nbMissiles++;
         }
