@@ -8,25 +8,15 @@ import javax.swing.JTextField;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Avion {
-    protected double x; //position
-    protected double y;
-    protected double vr;//vitesse
-    protected double vtheta;//degres
-    private int h; //hauteur fenetre
-    private int l;
+public class Avion extends Objet{
+
     protected int nbMissiles = 0;
     protected final int nbMaxMissiles = 5;
     public ArrayList<Bombe> listebombe;
     public ArrayList<Missiles> missiles;
 
     public Avion (double x, double y, double vr, double vtheta, int h, int l) {
-        this.x=x;
-        this.y=y;
-        this.vr=vr;
-        this.vtheta=vtheta;
-        this.h = h;
-        this.l = l;
+        super(x, y, vr, vtheta, h, l);
 
         listebombe=new ArrayList<Bombe>();
         missiles=new ArrayList<Missiles>();
