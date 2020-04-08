@@ -1,0 +1,4 @@
+- avion bot
+- missile à tête chercheuse
+- vecteurs pos, vitesse, acceleration (unifiés)
+- défilement paysage
