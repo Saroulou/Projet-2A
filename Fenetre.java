@@ -22,7 +22,8 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 	private Image iBackground; 
 	private final int largeurBackground = 1000;	
 	public int xBackground; // permet de determiner l'abcisse de l'image 
-	private int var1=0;
+	private int var1=0;// compteur de temps
+	private int varBombe=0;// temps initial du lancement de la bombe
 	
 // CONSTRUCTEURS
 
@@ -93,7 +94,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             av.avancer();
             for(Bombe b:av.listebombe){
                 if(b!=null){
-                    b.tombe();
+                    b.tombe(this.var1*this.var,varBombe);//Ajout du temps dans la méthode tombe
                     if(b.estsorti()){
                         av.listebombesuppr.add(b);
 
@@ -132,6 +133,8 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
         }else if(code==KeyEvent.VK_DOWN){
         avions.get(0).tirerBombe();
+        varBombe=var1*var; // Temps de lancement initial quand on appuie sur la touche;
+        System.out.println(varBombe);
         }if(code == KeyEvent.VK_SPACE) {
             avions.get(0).tirerMissiles();
 
