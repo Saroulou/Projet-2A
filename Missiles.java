@@ -6,7 +6,7 @@ import java.awt.*;
 public class Missiles extends Avion { 
 	
 	Toolkit T = Toolkit.getDefaultToolkit();
-	Image im = T.getImage("explosion-gif-001.gif");
+	Image im = T.getImage("explosion.gif");
 	//private int tempsDepartMissile ;
 	
 	public Missiles (double x, double y,double vr, double vtheta, int h, int l,Fenetre fenetre) {
