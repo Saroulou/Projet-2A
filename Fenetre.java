@@ -18,7 +18,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private ArrayList<Avion> avions;
     private ArrayList<AvionBot> avionsBot;
     private Timer timer;
-    private final int var=10;
+    private final int var=100;
     private ImageIcon sBackground; // permet de stocker l'image du fond d'écran
 	private Image iBackground; 
 	private final int largeurBackground = 1000;	
@@ -68,7 +68,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     // permet de dessiner l'écran et de rajouter les images "à la suite".
     
     private void movingBackground(Graphics g){
-		if(this.xBackground == -this.largeurBackground){this.xBackground = 0;}
+		if(this.xBackground == -this.largeurBackground){
+			this.xBackground = 0;
+			}
 		g.drawImage(this.iBackground, this.xBackground, 0, null);
 		g.drawImage(this.iBackground, this.xBackground + this.largeurBackground, 0, null);
 		g.drawImage(this.iBackground, this.xBackground+ this.largeurBackground * 2, 0, null);
@@ -87,19 +89,23 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 m.dessine(g);
                 if(var1-varMissile>=2000) {
                 	m.exploser(g);
-                	avb.missiles.remove(m);
+                	//avb.missiles.remove(m);
                 }
                 // explosions.remove(m); //suppresion image de l'explosion
             }
             for (Mitrailleuse b: avb.balles) {
             if (b != null)
             b.dessine(g);
-            if(var1-varBalle>=5000) {avb.balles.remove(b);}
+            /*if(var1-varBalle>=5000) {
+				avb.balles.remove(b);
+				}*/
             }   
     	}
         	for(Avion av: avions){
             av.dessine(g);
-            if(av.y==543) {av.exploser(g);} //si avion touche le sol y = 543
+            if(av.y==543) {
+				av.exploser(g);
+				} //si avion touche le sol y = 543
             
             
             for (Missiles m: av.missiles) {
@@ -108,14 +114,16 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 if(var1-varMissile>=1500) {
                 	m.exploser(g);
 
-                	av.missiles.remove(m);
+                	//av.missiles.remove(m); 
                 }
                 // explosions.remove(m); //suppresion image de l'explosion
             }
             for (Mitrailleuse b: av.balles) {
 				if (b != null)
             b.dessine(g);
-            if(var1-varBalle>=5000) {av.balles.remove(b);}
+            /*if(var1-varBalle>=5000) {
+				av.balles.remove(b);
+				}*/
             }
   
             for(Bombe b:av.listebombe){
@@ -123,20 +131,16 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                      b.dessine(g);
                 }
             }
-            for (Missiles m: av.missiles) {
-                if (m != null)
-                m.dessine(g);
-                if(var1-varBalle>=5000) {
-					av.balles.remove(m);
-					}
-
-            }
         }
-    }
+
+}
 
 
     public void actionPerformed(ActionEvent e){
-		var1++;
+		//var1++;
+		  var1 = var1 + var ;
+		  System.out.println("var 1= "+var1);
+		  System.out.println("var = "+var);
 		if(var1%10==0){
 			for(AvionBot avb: avionsBot){
             avb.avancer();
@@ -145,18 +149,38 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             for (Missiles m: avb.missiles) {
                 if (m != null)
                     m.avancer();
+                    if(var1-varMissile>=2000) {
+                	avb.listemissilesuppr.add(m);
+                }
+                
+                    
             }
             for (Mitrailleuse b: avb.balles) {
                 if (b != null)
                     b.avancer();
-            }  
+                    if(var1-varBalle>=5000) {
+				avb.listeballesuppr.add(b);
+				}
+            }
+            for(Missiles m: avb.listemissilesuppr){
+			avb.missiles.remove(m);
+			
+		}
+		for(Mitrailleuse b: avb.listeballesuppr){
+			avb.balles.remove(b);
+			
+		}
+		
+		avb.listemissilesuppr.clear(); 
+		avb.listeballesuppr.clear();    
+              
         }
 		
         for(Avion av: avions){
             av.avancer();
             for(Bombe b:av.listebombe){
                 if(b!=null){
-                    b.tombe(this.var1*this.var,varBombe);//Ajout du temps dans la méthode tombe
+                    b.tombe(this.var1,varBombe);//Ajout du temps dans la méthode tombe
                     if(b.estsorti()){
                         av.listebombesuppr.add(b);
 
@@ -168,16 +192,33 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             for (Missiles m: av.missiles) {
                 if (m != null)
                     m.avancer();
+                    if(var1-varMissile>=2000) {
+                	av.listemissilesuppr.add(m);
+                }
 
             }
             for (Mitrailleuse b: av.balles) {
                 if (b != null)
                     b.avancer();
+                    if(var1-varBalle>=5000) {
+				av.listeballesuppr.add(b);
+				}
             }
+             for(Missiles m: av.listemissilesuppr){
+			av.missiles.remove(m);
+			
+		}
+		for(Mitrailleuse b: av.listeballesuppr){
+			av.balles.remove(b);
+			
+		}
             for(Bombe b: av.listebombesuppr){
 			av.listebombe.remove(b);
 		}
-		av.listebombesuppr.clear();      
+		
+		av.listebombesuppr.clear();  
+		av.listemissilesuppr.clear(); 
+		av.listeballesuppr.clear();        
 	}
         
         
@@ -199,6 +240,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
         }else if(code==KeyEvent.VK_DOWN){
         avions.get(0).tirerBombe();
+        varBombe=var1;
         
         }if(code == KeyEvent.VK_SPACE) {
             avions.get(0).tirerMissiles();
@@ -211,9 +253,11 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
 
     public void keyReleased(KeyEvent e){}
+    
     public void keyTyped(KeyEvent e){}
 
-}
+	}
+
 
 
 

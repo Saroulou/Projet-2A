@@ -21,6 +21,8 @@ public class AvionBot extends Avion{
 		this.avion = avion;
 		missiles=new ArrayList<Missiles>();
         balles=new ArrayList<Mitrailleuse>();
+        listemissilesuppr=new ArrayList<>();
+        listeballesuppr=new ArrayList<>();
 	}
 		
 	    public AvionBot(Avion avion, int h, int l,Fenetre fenetre){

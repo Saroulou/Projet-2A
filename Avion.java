@@ -13,6 +13,9 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     public ArrayList<Bombe> listebombe;
     public ArrayList<Missiles> missiles;
     public ArrayList <Bombe> listebombesuppr;
+    public ArrayList <Missiles> listemissilesuppr;
+    public ArrayList <Mitrailleuse> listeballesuppr;
+    
     public ArrayList<Mitrailleuse> balles;
     protected int nbMissiles = 0;
     protected int nbBalles = 0;
@@ -33,6 +36,8 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         this.fenetre = fenetre;
         listebombe=new ArrayList<Bombe>();
         listebombesuppr=new ArrayList<>();
+        listemissilesuppr=new ArrayList<>();
+        listeballesuppr=new ArrayList<>();
         missiles=new ArrayList<Missiles>();
         balles=new ArrayList<Mitrailleuse>();
 
