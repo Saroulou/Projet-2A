@@ -19,8 +19,6 @@ public class Bombe {
         public Avion avion;
 		private final double vrInit;
 		private final double vthetaInit;
-		private final double xInit;
-		private final double yInit;
     
     public Bombe (double x, double y,double h, double l, Avion avion){
         this.x=x;
@@ -31,9 +29,6 @@ public class Bombe {
         this.avion=avion;
 		this.vrInit=avion.vr;
 		this.vthetaInit=avion.vtheta;
-		this.xInit=avion.x;
-		this.yInit=avion.y;
-		
     }
     
     public void dessine(Graphics g){
@@ -42,16 +37,11 @@ public class Bombe {
         
     }
     
-    public void tombe(int var1, int varBombe){
-		int vartemps=var1-varBombe;
+    public void tombe(){
 		//x=vrInit*Math.cos(Math.toRadians(vthetaInit))*Math.sqrt(2*(double)avion.h/acceleration);
-		x+=vrInit*Math.cos(Math.toRadians(vthetaInit))*(vartemps)*0.001;
-		System.out.println("x =" +x);
-		y+=acceleration/2*Math.pow(vartemps*0.001,2)+vrInit*Math.abs(Math.sin(Math.toRadians(vthetaInit)))*vartemps*0.001;
-		System.out.println("y = "+y);
+		x+=vrInit*Math.cos(Math.toRadians(vthetaInit));
+        y+=acceleration/2+vrInit*Math.abs(Math.sin(Math.toRadians(vthetaInit)));
 		//y=acceleration/2*Math.pow(x/Math.sin(Math.toRadians(vthetaInit)),2)-(double)avion.h;
-		//y+=acceleration/(2*Math.pow(vrInit,2))*Math.pow(x,2)*(1+Math.pow((Math.tan(Math.toRadians(vthetaInit))),2))-x*Math.tan(Math.toRadians(vthetaInit))-(double)this.avion.h;
-		
     }
     
     public boolean estsorti (){
