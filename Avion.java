@@ -92,8 +92,8 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         }
     }
     
-    public double getPositionX() {return this.x;}
-    public double getPositionY() {return this.y;}
+    public double getX() {return this.x;}
+    public double getY() {return this.y;}
     
     
     
