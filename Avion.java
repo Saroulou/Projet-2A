@@ -64,7 +64,7 @@ public class Avion extends Objet{
             nbMissiles++;
         }
 
-    }
+    } 
 
 }
 

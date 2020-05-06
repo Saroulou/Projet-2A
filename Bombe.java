@@ -40,7 +40,7 @@ public class Bombe {
         g.setColor(new Color (45,36,105));
         g.fillOval((int)(x-r),(int)(y-r),(int)(2*r),(int)(2*r));
         
-    }
+    } 
     
     public void tombe(int var1, int varBombe){
 		int vartemps=var1-varBombe;

@@ -78,7 +78,7 @@ public class Menu extends JFrame implements ActionListener{
 			image.setIcon(Imagee1);
 			image.setBounds(0,0,this.getWidth(),this.getHeight());
 			background.add(image);
-			
+			 
 			
 			/** panneau 2**/
 			

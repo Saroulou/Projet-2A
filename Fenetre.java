@@ -121,7 +121,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     }
 }
 
-    public void keyPressed(KeyEvent e){
+    public void keyPressed(KeyEvent e){ 
         int code = e.getKeyCode();
 
         if(code==KeyEvent.VK_LEFT){
