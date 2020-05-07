@@ -18,7 +18,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private ArrayList<Avion> avions;
     private final int NB_BOTS = 1; // nombre d'avions bots
     private Timer timer;
-    private final int var=200;
+    private final int var=100;
     private ImageIcon sBackground; // permet de stocker l'image du fond d'écran
     private Image iBackground; 
     private final int largeurBackground = 1000; 
@@ -208,6 +208,10 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public void keyReleased(KeyEvent e){}
     
     public void keyTyped(KeyEvent e){}
+    
+    public static void main (String[] args) {     
+        Fenetre fenetre=new Fenetre();
+    }
     
 }
 
