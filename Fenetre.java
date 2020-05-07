@@ -16,9 +16,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 // ATTRIBUTS
 
     private ArrayList<Avion> avions;
-    private final int NB_BOTS = 1;
+    private final int NB_BOTS = 1; // nombre d'avions bots
     private Timer timer;
-    private final int var=100;
+    private final int var=200;
     private ImageIcon sBackground; // permet de stocker l'image du fond d'écran
     private Image iBackground; 
     private final int largeurBackground = 1000; 
@@ -125,50 +125,15 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
     public void actionPerformed(ActionEvent e){
 		//var1++;
-		  var1 = var1 + var ;
-		  System.out.println("var 1= "+var1);
-		  System.out.println("var = "+var);
-		if(var1%10==0){
-			for(AvionBot avb: avionsBot){
-            avb.avancer();
-            avb.tourner(avb.getX(), avb.getY());
-            
-            for (Missiles m: avb.missiles) {
-                if (m != null)
-                    m.avancer();
-                    if(var1-varMissile>=2000) {
-                	avb.listemissilesuppr.add(m);
-                }
-                
-                    
-            }
-            for (Mitrailleuse b: avb.balles) {
-                if (b != null)
-                    b.avancer();
-                    if(var1-varBalle>=5000) {
-				avb.listeballesuppr.add(b);
-				}
-            }
-            for(Missiles m: avb.listemissilesuppr){
-			avb.missiles.remove(m);
-			
-		}
-		for(Mitrailleuse b: avb.listeballesuppr){
-			avb.balles.remove(b);
-			
-		}
-		
-		avb.listemissilesuppr.clear(); 
-		avb.listeballesuppr.clear();    
-              
-        }
+		  var1 = var1 + var;
 		
         for(Avion av: avions){
             av.avancer();
+            av.tourner();
             for(Bombe b:av.listebombe){
                 if(b!=null){
 					System.out.println("Bombe");
-                    b.tombe(this.var1,varBombe);//Ajout du temps dans la méthode tombe
+                    b.tombe(this.var1, varBombe, (double) vBackground);//Ajout du temps dans la méthode tombe
                     if(b.estsorti()){
                         av.listebombesuppr.add(b);
 
@@ -214,7 +179,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         repaint(); // appel a la methode paint 
          
     }
-}
+
 
     public void keyPressed(KeyEvent e){ 
         int code = e.getKeyCode();
