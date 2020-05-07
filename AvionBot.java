@@ -1,5 +1,10 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 
 public class AvionBot extends Avion{
@@ -31,13 +36,33 @@ public class AvionBot extends Avion{
 		
 
 	    public void dessine(Graphics g){
-	        int r = 30;
+	       /* int r = 30;
 	        g.setColor(new Color (210,19,90));
 	        g.fillPolygon(
 	            new int[]{(int)(x+r*Math.cos(Math.toRadians(vtheta))),(int)(x+r*Math.cos(Math.toRadians(vtheta+120))),(int)(x+r*Math.cos(Math.toRadians(vtheta-120)))},
 	            new int[]{(int)(y+r*Math.sin(Math.toRadians(vtheta))),(int)(y+r*Math.sin(Math.toRadians(vtheta+120))),(int)(y+r*Math.sin(Math.toRadians(vtheta-120)))},
-	            3);
+	            3);*/
+	            
+	             BufferedImage avionBC = LoadImage("avionBC.png");
+	        AffineTransform at = AffineTransform.getTranslateInstance(x-avionBC.getWidth()/2,y-avionBC.getHeight()/2);
+	        
+	        at.rotate(Math.toRadians(vtheta),avionBC.getWidth()/2, avionBC.getHeight()/2);
+	        at.scale(0.75, 0.75);
+	        
+	        Graphics2D g2d = (Graphics2D) g;
+	        g2d.drawImage(avionBC,at,null);
 	    }
+	   
+	    BufferedImage LoadImage(String NomFichier) {
+			BufferedImage img = null;
+			 try {
+		            img = ImageIO.read(new File(NomFichier));
+		        }
+		        catch (IOException e){
+		            e.printStackTrace();
+		        }
+			 return img;
+		}
 
 	    public void avancer(){
 	        x=(x+vr*Math.cos(Math.toRadians(vtheta)))%l;

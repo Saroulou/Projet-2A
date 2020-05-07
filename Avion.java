@@ -7,6 +7,11 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Avion extends Objet implements ActionListener, KeyListener{
 
@@ -23,6 +28,8 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     protected final int nbMaxBalles = 2000;
     public Fenetre fenetre;
     protected int tempsDepartMissile = 0 ;
+    protected int vie;
+
     
         
     //image explosion de l'avion quand collision
@@ -40,8 +47,6 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         listeballesuppr=new ArrayList<>();
         missiles=new ArrayList<Missiles>();
         balles=new ArrayList<Mitrailleuse>();
-
-        listebombe.add(new Bombe(this.x, this.y,h,l,this));
     }
 
      public Avion(int h, int l, Fenetre fenetre){
@@ -50,14 +55,40 @@ public class Avion extends Objet implements ActionListener, KeyListener{
 
 
     public void dessine(Graphics g){
-        int r = 30;
+        /*int r = 30;
         g.setColor(new Color (243,149,70));
         g.fillPolygon(
             new int[]{(int)(x+r*Math.cos(Math.toRadians(vtheta))),(int)(x+r*Math.cos(Math.toRadians(vtheta+120))),(int)(x+r*Math.cos(Math.toRadians(vtheta-120)))},
             new int[]{(int)(y+r*Math.sin(Math.toRadians(vtheta))),(int)(y+r*Math.sin(Math.toRadians(vtheta+120))),(int)(y+r*Math.sin(Math.toRadians(vtheta-120)))},
-            3);
+            3);*/
+            
+          BufferedImage avionJC = LoadImage("avionJC.png");
+        AffineTransform at = AffineTransform.getTranslateInstance(x-avionJC.getWidth()/2,y-avionJC.getHeight()/2);
+        
+        
+        at.rotate(Math.toRadians(vtheta),avionJC.getWidth()/2, avionJC.getHeight()/2);
+        at.scale(0.75, 0.75); //modification taille
+        
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(avionJC,at,null);
 
     }
+    
+     public void dessineVie (int vie,Graphics g){
+		 g.setColor(new Color (58, 137, 35));
+        g.fill3DRect(20,50,this.fenetre.getWidth()/7-(vie),this.fenetre.getHeight()/15,false);
+	}
+    
+    BufferedImage LoadImage(String NomFichier) {
+		BufferedImage img = null;
+		 try {
+	            img = ImageIO.read(new File(NomFichier));
+	        }
+	        catch (IOException e){
+	            e.printStackTrace();
+	        }
+		 return img;
+	}
 
     public void avancer (){
         x=(x+l+vr*Math.cos(Math.toRadians(vtheta)))%l;
@@ -74,7 +105,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
 	 }
 
     public void tirerBombe(){
-        Bombe bombe=new Bombe(this.x, this.y,h,l,this);
+        Bombe bombe=new Bombe(this.x+50, this.y+100,h,l,this);
         listebombe.add(bombe);
     }
 

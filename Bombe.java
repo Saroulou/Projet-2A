@@ -5,7 +5,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import java.io.IOException;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
+ 
 
 public class Bombe {
 		public double x;
@@ -21,6 +27,7 @@ public class Bombe {
 		private final double vthetaInit;
 		private final double xInit;
 		private final double yInit;
+		private int degatbombe;
     
     public Bombe (double x, double y,double h, double l, Avion avion){
         this.x=x;
@@ -37,15 +44,35 @@ public class Bombe {
     }
     
     public void dessine(Graphics g){
-        g.setColor(new Color (45,36,105));
-        g.fillOval((int)(x-r),(int)(y-r),(int)(2*r),(int)(2*r));
+       // g.setColor(new Color (45,36,105));
+       // g.fillOval((int)(x-r),(int)(y-r),(int)(2*r),(int)(2*r));
+        
+         BufferedImage ImBombe = LoadImage("Bombe.png");
+        AffineTransform at = AffineTransform.getTranslateInstance(x-ImBombe.getWidth()/2,y-ImBombe.getHeight()/2);
+        
+        
+        //at.rotate(Math.toRadians(vtheta),ImBombe.getWidth()/2, ImBombe.getHeight()/2);
+        at.scale(0.15, 0.15); //modification taille
+        
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(ImBombe,at,null);
         
     } 
+     BufferedImage LoadImage(String NomFichier) {
+		BufferedImage img = null;
+		 try {
+	            img = ImageIO.read(new File(NomFichier));
+	        }
+	        catch (IOException e){
+	            e.printStackTrace();
+	        }
+		 return img;
+	}
     
     public void tombe(int var1, int varBombe){
 		int vartemps=(var1-varBombe);
 		//x=vrInit*Math.cos(Math.toRadians(vthetaInit))*Math.sqrt(2*(double)avion.h/acceleration);
-		x+=vrInit*Math.cos(Math.toRadians(vthetaInit))*(vartemps)*0.001;
+		x+=vrInit*Math.cos(Math.toRadians(vthetaInit));
 		System.out.println("x =" +x);
 		y+=acceleration/2*Math.pow(vartemps*0.001,2)+vrInit*Math.abs(Math.sin(Math.toRadians(vthetaInit)))*vartemps*0.001;
 		System.out.println("y = "+y);

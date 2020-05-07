@@ -28,6 +28,8 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 	private int varMissile=0;// temps initial du lancement de la bombe
     //JLabel explosions = new JLabel(); //contient les images des explosions des missiles
     private int varBalle=0;
+    private int vieAvion=10;
+    private int vieBot=10;
 	
 // CONSTRUCTEURS
 
@@ -79,8 +81,11 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
     public void paint (Graphics g){
        this.movingBackground(g);
-        g.setColor(new Color (100,20,70));
+        //g.setColor(new Color (100,20,70));
         //g.fillRect(0,0,this.getWidth(),this.getHeight());
+        g.setColor(new Color (255,255,255));
+        g.drawRect(20, 50,this.getWidth()/7,this.getHeight()/15);
+
         
          for(AvionBot avb: avionsBot){
             avb.dessine(g);
@@ -103,6 +108,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     	}
         	for(Avion av: avions){
             av.dessine(g);
+            av.dessineVie(vieAvion, g);
             if(av.y==543) {
 				av.exploser(g);
 				} //si avion touche le sol y = 543
@@ -180,6 +186,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             av.avancer();
             for(Bombe b:av.listebombe){
                 if(b!=null){
+					System.out.println("Bombe");
                     b.tombe(this.var1,varBombe);//Ajout du temps dans la méthode tombe
                     if(b.estsorti()){
                         av.listebombesuppr.add(b);
@@ -255,8 +262,8 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public void keyReleased(KeyEvent e){}
     
     public void keyTyped(KeyEvent e){}
-
-	}
+    
+}
 
 
 
