@@ -41,7 +41,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         super(x, y, vr, vtheta, h, l);
         
         this.fenetre = fenetre;
-        listebombe=new ArrayList<Bombe>();
+        listebombe=new ArrayList<Bombe>();          // ajouter des commentaires pour expliquer à quoi servent les différentes listes SVP
         listebombesuppr=new ArrayList<>();
         listemissilesuppr=new ArrayList<>();
         listeballesuppr=new ArrayList<>();
@@ -90,16 +90,23 @@ public class Avion extends Objet implements ActionListener, KeyListener{
 		 return img;
 	}
 
-    public void avancer (){
-        x=(x+l+vr*Math.cos(Math.toRadians(vtheta)))%l;
+    public void avancer (double vBackground){
+        x=(x+l+vr*Math.cos(Math.toRadians(vtheta))-vBackground)%l; // si l'avion sort d'un côté, il rentre de l'autre
         y=(y+h+vr*Math.sin(Math.toRadians(vtheta)))%h;
 
+    }
+
+    public void avancer (){
+        avancer(0);
     }
 
     public void tourner(double theta){
         vtheta+=theta;
 
     }
+
+    public void tourner(){} // ne fait rien, pour compatibilité avec AvionBot
+
         public void exploser(Graphics g) {
 		g.drawImage(im,(int)(this.x-35),(int)(this.y-50),null);//this.x-x_im/2...
 	 }

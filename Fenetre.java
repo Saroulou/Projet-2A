@@ -12,20 +12,21 @@ import java.io.*;
 
 
 public class Fenetre extends JFrame implements ActionListener, KeyListener{
-	
+    
 // ATTRIBUTS
 
     private ArrayList<Avion> avions;
-    private ArrayList<AvionBot> avionsBot;
+    private final int NB_BOTS = 1;
     private Timer timer;
     private final int var=100;
     private ImageIcon sBackground; // permet de stocker l'image du fond d'écran
-	private Image iBackground; 
-	private final int largeurBackground = 1000;	
-	public int xBackground; // permet de determiner l'abcisse de l'image 
-	private int var1=0;// compteur de temps
-	private int varBombe=0;// temps initial du lancement de la bombe
-	private int varMissile=0;// temps initial du lancement de la bombe
+    private Image iBackground; 
+    private final int largeurBackground = 1000; 
+    public int xBackground; // permet de determiner l'abcisse de l'image 
+    public final int vBackground = 2; // vitesse de déplacement de l'arrière-plan
+    private int var1=0;// compteur de temps
+    private int varBombe=0;// temps initial du lancement de la bombe
+    private int varMissile=0;// temps initial du lancement de la bombe
     //JLabel explosions = new JLabel(); //contient les images des explosions des missiles
     private int varBalle=0;
     private int vieAvion=10;
@@ -36,26 +37,25 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public Fenetre(String nom, int width, int height){
 
         super(nom);
-		this.sBackground = new ImageIcon(getClass().getResource("Background.jpg"));
-		this.iBackground = this.sBackground.getImage();
-		this.xBackground=0;
-		
-		
-		
+        this.sBackground = new ImageIcon(getClass().getResource("Background.jpg"));
+        this.iBackground = this.sBackground.getImage();
+        this.xBackground=0;
+        
+        
+        
         setSize(width, height);
         setLocation(200,200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
-		
+        
         timer=new Timer(var, this);
         timer.start();
         
         avions=new ArrayList<Avion>();
         avions.add(new Avion(getHeight(),getWidth(),this));
-        
-        
-        avionsBot=new ArrayList<AvionBot>();
-        avionsBot.add(new AvionBot(avions.get(0),getHeight(),getWidth(),this));
+        for (int i = 0; i < NB_BOTS; i++) {
+            avions.add(new AvionBot(avions,getHeight(),getWidth(),this));
+        }
 
         addKeyListener(this);
 
@@ -70,13 +70,13 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     // permet de dessiner l'écran et de rajouter les images "à la suite".
     
     private void movingBackground(Graphics g){
-		if(this.xBackground == -this.largeurBackground){
-			this.xBackground = 0;
-			}
-		g.drawImage(this.iBackground, this.xBackground, 0, null);
-		g.drawImage(this.iBackground, this.xBackground + this.largeurBackground, 0, null);
-		g.drawImage(this.iBackground, this.xBackground+ this.largeurBackground * 2, 0, null);
-		g.drawImage(this.iBackground, this.xBackground + this.largeurBackground * 3, 0, null);
+        if(this.xBackground == -this.largeurBackground){
+            this.xBackground = 0;
+            }
+        g.drawImage(this.iBackground, this.xBackground, 0, null);
+        g.drawImage(this.iBackground, this.xBackground + this.largeurBackground, 0, null);
+        g.drawImage(this.iBackground, this.xBackground+ this.largeurBackground * 2, 0, null);
+        g.drawImage(this.iBackground, this.xBackground + this.largeurBackground * 3, 0, null);
 }
 
     public void paint (Graphics g){
@@ -87,54 +87,35 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         g.drawRect(20, 50,this.getWidth()/7,this.getHeight()/15);
 
         
-         for(AvionBot avb: avionsBot){
-            avb.dessine(g);
-            for (Missiles m: avb.missiles) {
-                if (m != null)
-                m.dessine(g);
-                if(var1-varMissile>=2000) {
-                	m.exploser(g);
-                	//avb.missiles.remove(m);
-                }
-                // explosions.remove(m); //suppresion image de l'explosion
-            }
-            for (Mitrailleuse b: avb.balles) {
-            if (b != null)
-            b.dessine(g);
-            /*if(var1-varBalle>=5000) {
-				avb.balles.remove(b);
-				}*/
-            }   
-    	}
-        	for(Avion av: avions){
+        for(Avion av: avions){
             av.dessine(g);
             av.dessineVie(vieAvion, g);
             if(av.y==543) {
-				av.exploser(g);
-				} //si avion touche le sol y = 543
-            
+                av.exploser(g);
+                } //si avion touche le sol y = 543      (il faudrait utiliser getHeight() ou similaire, non ?)
             
             for (Missiles m: av.missiles) {
                 if (m != null)
-                m.dessine(g);
+                    m.dessine(g);
                 if(var1-varMissile>=1500) {
-                	m.exploser(g);
+                    m.exploser(g);
 
-                	//av.missiles.remove(m); 
+                    //av.missiles.remove(m); 
                 }
                 // explosions.remove(m); //suppresion image de l'explosion
             }
             for (Mitrailleuse b: av.balles) {
-				if (b != null)
-            b.dessine(g);
+                if (b != null) {
+                    b.dessine(g);
+                }
             /*if(var1-varBalle>=5000) {
-				av.balles.remove(b);
-				}*/
+                av.balles.remove(b);
+                }*/
             }
   
             for(Bombe b:av.listebombe){
                  if(b!=null){
-                     b.dessine(g);
+                    b.dessine(g);
                 }
             }
         }
@@ -191,47 +172,47 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                     if(b.estsorti()){
                         av.listebombesuppr.add(b);
 
+                        }
+
                     }
 
                 }
+                for (Missiles m: av.missiles) {
+                    if (m != null)
+                        m.avancer((double) vBackground);
+                        if(var1-varMissile>=2000) {
+                        av.listemissilesuppr.add(m);
+                    }
 
-            }
-            for (Missiles m: av.missiles) {
-                if (m != null)
-                    m.avancer();
-                    if(var1-varMissile>=2000) {
-                	av.listemissilesuppr.add(m);
                 }
-
+                for (Mitrailleuse b: av.balles) {
+                    if (b != null)
+                        b.avancer((double) vBackground);
+                        if(var1-varBalle>=5000) {
+                    av.listeballesuppr.add(b);
+                    }
+                }
+                 for(Missiles m: av.listemissilesuppr){
+                av.missiles.remove(m);
+                
             }
-            for (Mitrailleuse b: av.balles) {
-                if (b != null)
-                    b.avancer();
-                    if(var1-varBalle>=5000) {
-				av.listeballesuppr.add(b);
-				}
+            for(Mitrailleuse b: av.listeballesuppr){
+                av.balles.remove(b);
+                
             }
-             for(Missiles m: av.listemissilesuppr){
-			av.missiles.remove(m);
-			
-		}
-		for(Mitrailleuse b: av.listeballesuppr){
-			av.balles.remove(b);
-			
-		}
             for(Bombe b: av.listebombesuppr){
-			av.listebombe.remove(b);
-		}
-		
-		av.listebombesuppr.clear();  
-		av.listemissilesuppr.clear(); 
-		av.listeballesuppr.clear();        
-	}
+                av.listebombe.remove(b);
+            }
+            
+            av.listebombesuppr.clear();  
+            av.listemissilesuppr.clear(); 
+            av.listeballesuppr.clear();        
+        }
         
         
-		xBackground --; // on récupere xBackground - 1 
-		repaint(); // appel a la methode paint 
-		 
+        xBackground -= vBackground; // on récupere xBackground - 1 
+        repaint(); // appel a la methode paint 
+         
     }
 }
 
@@ -253,9 +234,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             avions.get(0).tirerMissiles();
             varMissile=var1;// Temps de lancement initial quand on appuie sur la touche;
         }if(code == KeyEvent.VK_W) {
-			avions.get(0).tirerBalles();
-			varBalle=var1;
-			}
+            avions.get(0).tirerBalles();
+            varBalle=var1;
+            }
     }
 
 

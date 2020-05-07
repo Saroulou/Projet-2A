@@ -19,19 +19,19 @@ public class AvionBot extends Avion{
 
 
 
-	public AvionBot(Avion avion,double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre) {
+	public AvionBot(ArrayList<Avion> avions,double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre) {
 		super(x,y, vr, vtheta, h, l,fenetre);
 		this.x=x;
 		this.y=y;
-		this.avion = avion;
+		this.avion = avions.get(0);
 		missiles=new ArrayList<Missiles>();
         balles=new ArrayList<Mitrailleuse>();
         listemissilesuppr=new ArrayList<>();
         listeballesuppr=new ArrayList<>();
 	}
 		
-	    public AvionBot(Avion avion, int h, int l,Fenetre fenetre){
-	        this(avion,600,600,10,0,h,l,fenetre); //initialiser coord. initiales au hasard
+	    public AvionBot(ArrayList<Avion> avions, int h, int l,Fenetre fenetre){
+	        this(avions,600,600,5,0,h,l,fenetre); //initialiser coord. initiales au hasard
 	    }
 		
 
@@ -72,11 +72,12 @@ public class AvionBot extends Avion{
 	    	    
 	    
 	   //@Fonction asservissement 
-	    public void tourner(double xJ, double yJ){
+	    public void tourner(){
 	    	
 	    	double a = avion.getX()-this.x;
             double b = avion.getY()-this.y;
-	    	vtheta = Math.toDegrees(Math.atan2(b,a)); 
+            double dir = Math.toDegrees(Math.atan2(b,a));
+	    	vtheta = dir;
 
 	    }
 	    
@@ -86,25 +87,25 @@ public class AvionBot extends Avion{
 		 }
 		
 
-	    public void tirerMissiles() {
+	    // public void tirerMissiles() {
 	    	
-	    	//if(direction avionBot est proche à un angle x de avionjoueur : tirer) 
+	    // 	//if(direction avionBot est proche à un angle x de avionjoueur : tirer) 
 	    	
-	        if(nbMissiles<nbMaxMissilesBOT) {
-	            Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre);
-	            missiles.add(missile);
-	            nbMissiles++;
-	        }
-	    }
+	    //     if(nbMissiles<nbMaxMissilesBOT) {
+	    //         Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre);
+	    //         missiles.add(missile);
+	    //         nbMissiles++;
+	    //     }
+	    // }
 	    
-	    public void tirerBalles() {
+	    // public void tirerBalles() {
 	    	
-	        if(nbBalles<nbMaxBalles) {
-	            Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre);
-	            balles.add(balle);
-	            nbBalles++;
-	        }
-	    }
+	    //     if(nbBalles<nbMaxBalles) {
+	    //         Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre);
+	    //         balles.add(balle);
+	    //         nbBalles++;
+	    //     }
+	    // }
 	    
 
 	}
