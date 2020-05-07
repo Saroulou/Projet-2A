@@ -24,13 +24,16 @@ public class Missiles extends Avion {
 	            new int[]{(int)(y+r*Math.sin(Math.toRadians(vtheta))),(int)(y+r*Math.sin(Math.toRadians(vtheta+120))),(int)(y+r*Math.sin(Math.toRadians(vtheta-120)))},
 	            3);
     } 
-	
-	 public void avancer(){
-	        x=(x+vr*Math.cos(Math.toRadians(vtheta)));
-	        y=(y+vr*Math.sin(Math.toRadians(vtheta)));
-	       
-	        
-	 }
+
+    public void avancer (double vBackground){
+        x=(x+l+vr*Math.cos(Math.toRadians(vtheta))-vBackground)%l; // si l'avion sort d'un côté, il rentre de l'autre
+        y=(y+h+vr*Math.sin(Math.toRadians(vtheta)))%h;
+
+    }
+
+    public void avancer (){
+        avancer(0);
+    }
 	 
 	 public void exploser(Graphics g) {
 		  

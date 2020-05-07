@@ -38,12 +38,6 @@ public class AvionBot extends Avion{
 	            new int[]{(int)(y+r*Math.sin(Math.toRadians(vtheta))),(int)(y+r*Math.sin(Math.toRadians(vtheta+120))),(int)(y+r*Math.sin(Math.toRadians(vtheta-120)))},
 	            3);
 	    }
-
-	    public void avancer(){
-	        x=(x+vr*Math.cos(Math.toRadians(vtheta)))%l;
-	        y=(y+vr*Math.sin(Math.toRadians(vtheta)))%h;
-	        //System.out.println(x);
-	    }
 	    	    
 	    
 	   //@Fonction asservissement 
@@ -62,25 +56,25 @@ public class AvionBot extends Avion{
 		 }
 		
 
-	    public void tirerMissiles() {
+	    // public void tirerMissiles() {
 	    	
-	    	//if(direction avionBot est proche à un angle x de avionjoueur : tirer) 
+	    // 	//if(direction avionBot est proche à un angle x de avionjoueur : tirer) 
 	    	
-	        if(nbMissiles<nbMaxMissilesBOT) {
-	            Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre);
-	            missiles.add(missile);
-	            nbMissiles++;
-	        }
-	    }
+	    //     if(nbMissiles<nbMaxMissilesBOT) {
+	    //         Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre);
+	    //         missiles.add(missile);
+	    //         nbMissiles++;
+	    //     }
+	    // }
 	    
-	    public void tirerBalles() {
+	    // public void tirerBalles() {
 	    	
-	        if(nbBalles<nbMaxBalles) {
-	            Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre);
-	            balles.add(balle);
-	            nbBalles++;
-	        }
-	    }
+	    //     if(nbBalles<nbMaxBalles) {
+	    //         Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre);
+	    //         balles.add(balle);
+	    //         nbBalles++;
+	    //     }
+	    // }
 	    
 
 	}

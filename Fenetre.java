@@ -23,6 +23,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private Image iBackground; 
     private final int largeurBackground = 1000; 
     public int xBackground; // permet de determiner l'abcisse de l'image 
+    public final int vBackground = 2; // vitesse de déplacement de l'arrière-plan
     private int var1=0;// compteur de temps
     private int varBombe=0;// temps initial du lancement de la bombe
     private int varMissile=0;// temps initial du lancement de la bombe
@@ -98,8 +99,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 // explosions.remove(m); //suppresion image de l'explosion
             }
             for (Mitrailleuse b: av.balles) {
-                if (b != null)
-            b.dessine(g);
+                if (b != null) {
+                    b.dessine(g);
+                }
             /*if(var1-varBalle>=5000) {
                 av.balles.remove(b);
                 }*/
@@ -123,11 +125,11 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         if(var1%10==0){
         
             for(Avion av: avions){
-                av.avancer();
+                av.avancer((double) vBackground);
                 av.tourner();
                 for(Bombe b:av.listebombe){
                     if(b!=null){
-                        b.tombe(this.var1,varBombe);//Ajout du temps dans la méthode tombe
+                        b.tombe(this.var1, varBombe, (double) vBackground);//Ajout du temps dans la méthode tombe
                         if(b.estsorti()){
                             av.listebombesuppr.add(b);
 
@@ -138,7 +140,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 }
                 for (Missiles m: av.missiles) {
                     if (m != null)
-                        m.avancer();
+                        m.avancer((double) vBackground);
                         if(var1-varMissile>=2000) {
                         av.listemissilesuppr.add(m);
                     }
@@ -146,7 +148,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 }
                 for (Mitrailleuse b: av.balles) {
                     if (b != null)
-                        b.avancer();
+                        b.avancer((double) vBackground);
                         if(var1-varBalle>=5000) {
                     av.listeballesuppr.add(b);
                     }
@@ -159,7 +161,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 av.balles.remove(b);
                 
             }
-                for(Bombe b: av.listebombesuppr){
+            for(Bombe b: av.listebombesuppr){
                 av.listebombe.remove(b);
             }
             
@@ -169,7 +171,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         }
         
         
-        xBackground --; // on récupere xBackground - 1 
+        xBackground -= vBackground; // on récupere xBackground - 1 
         repaint(); // appel a la methode paint 
          
     }

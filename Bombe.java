@@ -42,10 +42,10 @@ public class Bombe {
         
     } 
     
-    public void tombe(int var1, int varBombe){
+    public void tombe(int var1, int varBombe, double vBackground){
 		int vartemps=(var1-varBombe);
 		//x=vrInit*Math.cos(Math.toRadians(vthetaInit))*Math.sqrt(2*(double)avion.h/acceleration);
-		x+=vrInit*Math.cos(Math.toRadians(vthetaInit)); // la vitesse reste constante
+		x+=vrInit*Math.cos(Math.toRadians(vthetaInit)) - vBackground; // la vitesse reste constante
 		// System.out.println("x =" +x);
 		y+=acceleration/2*Math.pow(vartemps*0.001,2)+vrInit*Math.abs(Math.sin(Math.toRadians(vthetaInit)))*vartemps*0.001;
 		// System.out.println("y = "+y);
