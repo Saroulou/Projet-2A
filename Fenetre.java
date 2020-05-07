@@ -40,9 +40,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         this.sBackground = new ImageIcon(getClass().getResource("Background.jpg"));
         this.iBackground = this.sBackground.getImage();
         this.xBackground=0;
-        
-        
-        
+
         setSize(width, height);
         setLocation(200,200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,13 +60,13 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         setVisible(true);
     }
 
-// METHODES
-
     public Fenetre(){
         this("Skywar",1500,700);
     }
+
+// METHODES
+
     // permet de dessiner l'écran et de rajouter les images "à la suite".
-    
     private void movingBackground(Graphics g){
         if(this.xBackground == -this.largeurBackground){
             this.xBackground = 0;
@@ -80,9 +78,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 }
 
     public void paint (Graphics g){
-       this.movingBackground(g);
-        //g.setColor(new Color (100,20,70));
-        //g.fillRect(0,0,this.getWidth(),this.getHeight());
+        g.setColor(new Color (6,55,58));
+        g.fillRect(0,0,this.getWidth(),this.getHeight());
+        this.movingBackground(g);
         g.setColor(new Color (255,255,255));
         g.drawRect(20, 50,this.getWidth()/7,this.getHeight()/15);
 
@@ -90,13 +88,14 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         for(Avion av: avions){
             av.dessine(g);
             av.dessineVie(vieAvion, g);
-            if(av.y==543) {
+            if(av.y > getHeight()) {
                 av.exploser(g);
-                } //si avion touche le sol y = 543      (il faudrait utiliser getHeight() ou similaire, non ?)
+            }
             
             for (Missiles m: av.missiles) {
-                if (m != null)
+                if (m != null){
                     m.dessine(g);
+                }
                 if(var1-varMissile>=1500) {
                     m.exploser(g);
 
@@ -120,15 +119,15 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             }
         }
 
-}
+    }
 
 
     public void actionPerformed(ActionEvent e){
 		//var1++;
-		  var1 = var1 + var;
+	   var1 = var1 + var;
 		
         for(Avion av: avions){
-            av.avancer();
+            av.avancer((double) vBackground);
             av.tourner();
             for(Bombe b:av.listebombe){
                 if(b!=null){
@@ -175,7 +174,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         }
         
         
-        xBackground -= vBackground; // on récupere xBackground - 1 
+        xBackground -= vBackground; // position actualisée avec la vitesse de l'arrière plan
         repaint(); // appel a la methode paint 
          
     }

@@ -91,9 +91,11 @@ public class Avion extends Objet implements ActionListener, KeyListener{
 	}
 
     public void avancer (double vBackground){
-        x=(x+l+vr*Math.cos(Math.toRadians(vtheta))-vBackground)%l; // si l'avion sort d'un côté, il rentre de l'autre
-        y=(y+h+vr*Math.sin(Math.toRadians(vtheta)))%h;
-
+        x = (x + l + vr * Math.cos(Math.toRadians(vtheta)) - vBackground) % l; // si l'avion sort d'un côté, il rentre de l'autre
+        y = y + vr * Math.sin(Math.toRadians(vtheta));
+        if (y < 0) {
+            vtheta = 90; // vtheta += 180;
+        }
     }
 
     public void avancer (){
@@ -107,7 +109,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
 
     public void tourner(){} // ne fait rien, pour compatibilité avec AvionBot
 
-        public void exploser(Graphics g) {
+    public void exploser(Graphics g) {
 		g.drawImage(im,(int)(this.x-35),(int)(this.y-50),null);//this.x-x_im/2...
 	 }
 

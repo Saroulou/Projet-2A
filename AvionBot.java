@@ -63,12 +63,6 @@ public class AvionBot extends Avion{
 		        }
 			 return img;
 		}
-
-	    public void avancer(){
-	        x=(x+vr*Math.cos(Math.toRadians(vtheta)))%l;
-	        y=(y+vr*Math.sin(Math.toRadians(vtheta)))%h;
-	        //System.out.println(x);
-	    }
 	    	    
 	    
 	   //@Fonction asservissement 
