@@ -125,7 +125,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
     public void actionPerformed(ActionEvent e){
 		//var1++;
-		  var1 = var1 + var;
+		  var1 = var1 + var ;
+		  System.out.println("var 1= "+var1);
+		  System.out.println("var = "+var);
 		
         for(Avion av: avions){
             av.avancer();
@@ -133,7 +135,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             for(Bombe b:av.listebombe){
                 if(b!=null){
 					System.out.println("Bombe");
-                    b.tombe(this.var1, varBombe, (double) vBackground);//Ajout du temps dans la méthode tombe
+                    b.tombe(this.var1,varBombe,vBackground); //Ajout du temps dans la méthode tombe
                     if(b.estsorti()){
                         av.listebombesuppr.add(b);
 
@@ -178,8 +180,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         xBackground -= vBackground; // on récupere xBackground - 1 
         repaint(); // appel a la methode paint 
          
-    }
-
+}
 
     public void keyPressed(KeyEvent e){ 
         int code = e.getKeyCode();
@@ -210,6 +211,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public void keyTyped(KeyEvent e){}
     
 }
+
 
 
 
