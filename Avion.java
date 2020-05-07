@@ -69,6 +69,9 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         vtheta+=theta;
 
     }
+
+    public void tourner(){} // ne fait rien, pour compatibilité avec AvionBot
+
         public void exploser(Graphics g) {
 		g.drawImage(im,(int)(this.x-35),(int)(this.y-50),null);//this.x-x_im/2...
 	 }
