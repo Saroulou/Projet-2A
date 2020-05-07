@@ -139,12 +139,12 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public void actionPerformed(ActionEvent e){
 		//var1++;
 		  var1 = var1 + var ;
-		  System.out.println("var 1= "+var1);
-		  System.out.println("var = "+var);
+		  // System.out.println("var 1= "+var1);
+		  // System.out.println("var = "+var);
 		if(var1%10==0){
 			for(AvionBot avb: avionsBot){
             avb.avancer();
-            avb.tourner(avb.getX(), avb.getY());
+            avb.tourner();
             
             for (Missiles m: avb.missiles) {
                 if (m != null)

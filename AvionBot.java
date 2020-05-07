@@ -26,7 +26,7 @@ public class AvionBot extends Avion{
 	}
 		
 	    public AvionBot(Avion avion, int h, int l,Fenetre fenetre){
-	        this(avion,600,600,10,0,h,l,fenetre); //initialiser coord. initiales au hasard
+	        this(avion,600,600,5,0,h,l,fenetre); //initialiser coord. initiales au hasard
 	    }
 		
 
@@ -47,11 +47,14 @@ public class AvionBot extends Avion{
 	    	    
 	    
 	   //@Fonction asservissement 
-	    public void tourner(double xJ, double yJ){
+	    public void tourner(){
 	    	
 	    	double a = avion.getX()-this.x;
             double b = avion.getY()-this.y;
-	    	vtheta = Math.toDegrees(Math.atan2(b,a)); 
+            double dir = Math.toDegrees(Math.atan2(b,a));
+            // System.out.println(dir-vtheta);
+	    	vtheta = dir;
+	    	vtheta += Math.signum(dir-vtheta) * 10; 
 
 	    }
 	    

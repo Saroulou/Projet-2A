@@ -7,7 +7,7 @@ git add .
 
 javac -sourcepath . Main.java
 Java Main
-rm -rf ./*.tmp
+rm *.class
 
 javac -sourcepath . Main.java && Java Main
-rm -rf ./*.tmp && git commit -a -m "[description de la modification]" && git push
+rm *.class && git commit -a -m "[description de la modification]" && git push
