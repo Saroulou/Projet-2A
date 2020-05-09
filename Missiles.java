@@ -23,7 +23,7 @@ public class Missiles extends Avion {
     }
 
     public String toString(){
-        return "Objet " + this.nom;
+        return "Missile " + this.nom;
     }
     
     

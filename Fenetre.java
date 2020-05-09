@@ -30,7 +30,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     //JLabel explosions = new JLabel(); //contient les images des explosions des missiles
     private int varBalle=0;
     private int vieBot=10;
-	
+    
 // CONSTRUCTEURS
 
     public Fenetre(String nom, int width, int height){
@@ -122,27 +122,27 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
 
     public void actionPerformed(ActionEvent e){
-		//var1++;
-		  var1 = var1 + var ;
-		  // System.out.println("var 1= "+var1);
-		  // System.out.println("var = "+var);
-		int r = (int) (Math.random()*100+1); //génération de nombres aléatoires pour les avions bot
-		 int p = (int) (Math.random()*50+1);
+        //var1++;
+          var1 = var1 + var ;
+          // System.out.println("var 1= "+var1);
+          // System.out.println("var = "+var);
+        int r = (int) (Math.random()*100+1); //génération de nombres aléatoires pour les avions bot
+         int p = (int) (Math.random()*50+1);
         for(Avion av: avions){
             av.avancer((double) vBackground);
             av.tourner();
             
             if (av instanceof AvionBot){//vérifier si l'avion est un bot
-				
+                
             if(r%7==0 && r%4==0) { //tirs à tps aléatoires
-            	av.tirerMissiles(); 	
+                av.tirerMissiles();     
             }
             
             if(p%7==0) { //tirs à tps aléatoires
-            	av.tirerBalles();
+                av.tirerBalles();
             }
             
-		}
+        }
             
 
             ArrayList<Objet> objets = new ArrayList<Objet>(avions); // liste de tous les objets
@@ -151,28 +151,29 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             objets.addAll(av.balles);
 
             for (Objet obj: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
+                System.out.println(obj);
                 if (av != obj) {
                     if (av.collison(obj)) {
-                    System.out.println("Collision entre " + av.toString() + " et " + obj.toString());
-                    if(obj instanceof Bombe){
-						//av.vie=av.vie-obj.degatbombe;
-						av.vie=av.vie-3;
-                } else if (obj instanceof Missiles){
-						//av.vie=av.vie-obj.degatsM;
-						av.vie=av.vie-2;
-				}else if (obj instanceof Mitrailleuse){
-					//av.vie=av.vie-obj.degatMitr;
-					av.vie=av.vie-1;
-				}else if (obj instanceof Avion){
-					av.vie=0;
-						}
-					}
-				}
-			}
+                        System.out.println("Collision entre " + av.toString() + " et " + obj.toString());
+                        if(obj instanceof Bombe){
+                            //av.vie=av.vie-obj.degatbombe;
+                            av.vie=av.vie-3;
+                        } else if (obj instanceof Missiles){
+                            //av.vie=av.vie-obj.degatsM;
+                            av.vie=av.vie-2;
+                        }else if (obj instanceof Mitrailleuse){
+                            //av.vie=av.vie-obj.degatMitr;
+                            av.vie=av.vie-1;
+                        }else if (obj instanceof Avion){
+                            av.vie=0;
+                        }
+                    }
+                }
+            }
 
             for(Bombe b:av.listebombe){
                 if(b!=null){
-					System.out.println("Bombe");
+                    System.out.println("Bombe");
                     b.avancer(this.var1,varBombe,vBackground); //Ajout du temps dans la méthode tombe/avancer
                     if(b.estsorti()){
                         av.listebombesuppr.add(b);
@@ -185,7 +186,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 for (Missiles m: av.missiles) {
                     if (m != null){
                         m.avancer((double) vBackground);
-					}
+                    }
                         if(var1-varMissile>=2000) {
                         av.listemissilesuppr.add(m);
                     }
@@ -246,7 +247,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             }
             
         if(code == KeyEvent.VK_UP) {
-        	avions.get(0).accelerer();
+            avions.get(0).accelerer();
         }
     }
 
