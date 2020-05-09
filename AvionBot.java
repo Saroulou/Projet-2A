@@ -83,7 +83,7 @@ public class AvionBot extends Avion{
 	    	//if(direction avionBot est proche à un angle x de avionjoueur : tirer) 
 	    	
 	        if(nbMissiles<nbMaxMissilesBOT) {
-	            Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre);
+	            Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre,Integer.toString(nbMissiles));
 	            missiles.add(missile);
 	            nbMissiles++;
 	        }
@@ -92,7 +92,7 @@ public class AvionBot extends Avion{
 	    public void tirerBalles() {
 	    	
 	        if(nbBalles<nbMaxBalles) {
-	            Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre);
+	            Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre, Integer.toString(nbBalles));
 	            balles.add(balle);
 	            nbBalles++;
 	        }
