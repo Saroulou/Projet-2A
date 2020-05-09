@@ -30,6 +30,8 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     protected int tempsDepartMissile = 0 ;
     protected int vie;
 
+    protected final double R_COLLISON = 30; // 'rayon' d'un avion; 2*R = Distance entre deux avions pour avoir une collision
+
     
         
     //image explosion de l'avion quand collision
@@ -135,6 +137,10 @@ public class Avion extends Objet implements ActionListener, KeyListener{
             balles.add(balle);
             nbBalles++;
         }
+    }
+
+    public boolean collison(Avion avion) {
+        return Math.sqrt(Math.pow(x-avion.getX(), 2) + Math.pow(y-avion.getY(), 2)) < R_COLLISON;
     }
     
     public double getX() {return this.x;}

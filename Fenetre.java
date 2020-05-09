@@ -131,6 +131,13 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         for(Avion av: avions){
             av.avancer((double) vBackground);
             av.tourner();
+
+            for (Avion av2: avions){ // vérifie avec s'il y a une collison avec un autre avion en vérifiant pour chaque autre avion
+                if (av != av2) {
+                    if (av.collison(av2)) System.out.println("Collision");
+                }
+            }
+
             for(Bombe b:av.listebombe){
                 if(b!=null){
 					System.out.println("Bombe");
