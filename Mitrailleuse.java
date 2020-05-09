@@ -3,7 +3,7 @@
 
 
 	public class Mitrailleuse extends Avion {
-		public int degats;
+		public int degatMitr=1;
 
 		public Mitrailleuse(double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre, String nom) {
 			super(x, y, vr, vtheta, h, l,fenetre, 5, nom);

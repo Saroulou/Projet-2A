@@ -28,7 +28,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     protected final int nbMaxBalles = 2000;
     public Fenetre fenetre;
     protected int tempsDepartMissile = 0 ;
-    protected int vie;
+    public int vie=10;
         
     //image explosion de l'avion quand collision
     Toolkit T = Toolkit.getDefaultToolkit();
@@ -45,6 +45,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         listeballesuppr=new ArrayList<>();
         missiles=new ArrayList<Missiles>();
         balles=new ArrayList<Mitrailleuse>();
+
     }
 
     public Avion(int h, int l, Fenetre fenetre, String nom){
@@ -73,13 +74,11 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(avionJC,at,null);
+        
+		g.setColor(new Color (58, 137, 35));
 
+        g.fill3DRect(20,50,this.vie*this.fenetre.getWidth()/70,this.fenetre.getHeight()/15,false);
     }
-    
-     public void dessineVie (int vie,Graphics g){
-		 g.setColor(new Color (58, 137, 35));
-        g.fill3DRect(20,50,this.fenetre.getWidth()/7-(vie),this.fenetre.getHeight()/15,false);
-	}
     
     BufferedImage LoadImage(String NomFichier) {
 		BufferedImage img = null;

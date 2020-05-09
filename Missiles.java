@@ -15,7 +15,7 @@ public class Missiles extends Avion {
     Image im = T.getImage("explosion.gif");
     Image missile = T.getImage("missile.png");
     //private int tempsDepartMissile ;
-        public int degatsM;
+        public int degatsM=2;
     
     public Missiles (double x, double y,double vr, double vtheta, int h, int l,Fenetre fenetre, String nom) {
         super(x,y,vr,vtheta,h,l,fenetre, 10, nom);

@@ -27,7 +27,7 @@ public class Bombe extends Objet {
 		private final double vthetaInit;
 		private final double xInit;
 		private final double yInit;
-		private int degatbombe;
+		private int degatbombe=3;
     
     public Bombe (double x, double y,int h, int l, Avion avion, Fenetre fenetre, String nom){
         super(x,y, 0.0, 0.0, h, l, 20, nom);

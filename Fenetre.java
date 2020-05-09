@@ -29,7 +29,6 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private int varMissile=0;// temps initial du lancement de la bombe
     //JLabel explosions = new JLabel(); //contient les images des explosions des missiles
     private int varBalle=0;
-    private int vieAvion=10;
     private int vieBot=10;
 	
 // CONSTRUCTEURS
@@ -82,12 +81,11 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         g.fillRect(0,0,this.getWidth(),this.getHeight());
         this.movingBackground(g);
         g.setColor(new Color (255,255,255));
-        g.drawRect(20, 50,this.getWidth()/7,this.getHeight()/15);
+        g.drawRect(19, 49,this.getWidth()/7+1,this.getHeight()/15+1);
 
         
         for(Avion av: avions){
             av.dessine(g);
-            av.dessineVie(vieAvion, g);
  
             if(av.y > getHeight()) {
                 av.exploser(g);
@@ -150,12 +148,27 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             ArrayList<Objet> objets = new ArrayList<Objet>(avions); // liste de tous les objets
             objets.addAll(av.listebombe);
             objets.addAll(av.missiles);
+            objets.addAll(av.balles);
 
             for (Objet obj: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
                 if (av != obj) {
-                    if (av.collison(obj)) System.out.println("Collision entre " + av.toString() + " et " + obj.toString());
-                }
-            }
+                    if (av.collison(obj)) {
+                    System.out.println("Collision entre " + av.toString() + " et " + obj.toString());
+                    if(obj instanceof Bombe){
+						//av.vie=av.vie-obj.degatbombe;
+						av.vie=av.vie-3;
+                } else if (obj instanceof Missiles){
+						//av.vie=av.vie-obj.degatsM;
+						av.vie=av.vie-2;
+				}else if (obj instanceof Mitrailleuse){
+					//av.vie=av.vie-obj.degatMitr;
+					av.vie=av.vie-1;
+				}else if (obj instanceof Avion){
+					av.vie=0;
+						}
+					}
+				}
+			}
 
             for(Bombe b:av.listebombe){
                 if(b!=null){
