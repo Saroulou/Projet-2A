@@ -50,9 +50,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         timer.start();
         
         avions=new ArrayList<Avion>();
-        avions.add(new Avion(getHeight(),getWidth(),this));
+        avions.add(new Avion(getHeight(),getWidth(),this, "Joueur"));
         for (int i = 0; i < NB_BOTS; i++) {
-            avions.add(new AvionBot(avions,getHeight(),getWidth(),this));
+            avions.add(new AvionBot(avions,getHeight(),getWidth(),this, Integer.toString(i)));
         }
 
         addKeyListener(this);
@@ -132,16 +132,20 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             av.avancer((double) vBackground);
             av.tourner();
 
-            for (Avion av2: avions){ // vérifie avec s'il y a une collison avec un autre avion en vérifiant pour chaque autre avion
-                if (av != av2) {
-                    if (av.collison(av2)) System.out.println("Collision");
+            ArrayList<Objet> objets = new ArrayList<Objet>(avions); // liste de tous les objets
+            objets.addAll(av.listebombe);
+            objets.addAll(av.missiles);
+
+            for (Objet obj: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
+                if (av != obj) {
+                    if (av.collison(obj)) System.out.println("Collision entre " + av.toString() + " et " + obj.toString());
                 }
             }
 
             for(Bombe b:av.listebombe){
                 if(b!=null){
 					System.out.println("Bombe");
-                    b.tombe(this.var1,varBombe,vBackground); //Ajout du temps dans la méthode tombe
+                    b.avancer(this.var1,varBombe,vBackground); //Ajout du temps dans la méthode tombe/avancer
                     if(b.estsorti()){
                         av.listebombesuppr.add(b);
 
