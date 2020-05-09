@@ -29,18 +29,14 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     public Fenetre fenetre;
     protected int tempsDepartMissile = 0 ;
     protected int vie;
-
-    protected final double R_COLLISON = 30; // 'rayon' d'un avion; 2*R = Distance entre deux avions pour avoir une collision
-
-    
         
     //image explosion de l'avion quand collision
     Toolkit T = Toolkit.getDefaultToolkit();
 	Image im = T.getImage("explosion-gif-001.gif");
  
 
-    public Avion (double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre) {
-        super(x, y, vr, vtheta, h, l);
+    public Avion (double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre, double r, String nom) {
+        super(x, y, vr, vtheta, h, l, r, nom);
         
         this.fenetre = fenetre;
         listebombe=new ArrayList<Bombe>();          // ajouter des commentaires pour expliquer à quoi servent les différentes listes SVP
@@ -51,8 +47,12 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         balles=new ArrayList<Mitrailleuse>();
     }
 
-     public Avion(int h, int l, Fenetre fenetre){
-        this(100,100,10,0,h,l,fenetre);
+    public Avion(int h, int l, Fenetre fenetre, String nom){
+        this(100,100,10,0,h,l,fenetre, 30, nom);
+    }
+
+    public String toString(){
+        return "Avion " + this.nom;
     }
 
 
@@ -64,7 +64,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
             new int[]{(int)(y+r*Math.sin(Math.toRadians(vtheta))),(int)(y+r*Math.sin(Math.toRadians(vtheta+120))),(int)(y+r*Math.sin(Math.toRadians(vtheta-120)))},
             3);*/
             
-          BufferedImage avionJC = LoadImage("avionJC.png");
+        BufferedImage avionJC = LoadImage("avionJC.png");
         AffineTransform at = AffineTransform.getTranslateInstance(x-avionJC.getWidth()/2,y-avionJC.getHeight()/2);
         
         
@@ -100,23 +100,17 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         }
     }
 
-    public void avancer (){
-        avancer(0);
-    }
-
     public void tourner(double theta){
         vtheta+=theta;
 
     }
-
-    public void tourner(){} // ne fait rien, pour compatibilité avec AvionBot
 
     public void exploser(Graphics g) {
 		g.drawImage(im,(int)(this.x-35),(int)(this.y-50),null);//this.x-x_im/2...
 	 }
 
     public void tirerBombe(){
-        Bombe bombe=new Bombe(this.x+50, this.y+100,h,l,this);
+        Bombe bombe=new Bombe(this.x+50, this.y+100,h,l,this, fenetre, "");
         listebombe.add(bombe);
     }
 
@@ -124,7 +118,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
      public void tirerMissiles() {
     	
         if(nbMissiles<nbMaxMissiles) {
-            Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre);
+            Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre, Integer.toString(nbMissiles));
             missiles.add(missile);
             nbMissiles++;
         }
@@ -133,14 +127,10 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     public void tirerBalles() {
     	
         if(nbBalles<nbMaxBalles) {
-            Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre);
+            Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre, Integer.toString(nbBalles));
             balles.add(balle);
             nbBalles++;
         }
-    }
-
-    public boolean collison(Avion avion) {
-        return Math.sqrt(Math.pow(x-avion.getX(), 2) + Math.pow(y-avion.getY(), 2)) < R_COLLISON;
     }
     
     public void accelerer() {
