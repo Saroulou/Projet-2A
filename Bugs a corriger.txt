@@ -1,0 +1,4 @@
+-Avion bot rentre en collision avec d'autres avions qui apparaissent comme par magie dans la liste
+-la trajectoire et la vitesse des missiles qui tire l'avion Bot est bizarre -ils sont lents et ont une trajectoire parabolique chelou)
+-L'avion bot ne tire pas tout seul, sauf au début, il faut que le joueur tire pour qu'il tire
+-Les missiles et balles sortantes de l'avion du joueur affectent la vie de l'avion joueur
