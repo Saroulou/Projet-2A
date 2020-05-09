@@ -23,7 +23,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private Image iBackground; 
     private final int largeurBackground = 1000; 
     public int xBackground; // permet de determiner l'abcisse de l'image 
-    public final int vBackground = 2; // vitesse de déplacement de l'arrière-plan
+    public final int vBackground =5; // vitesse de déplacement de l'arrière-plan
     private int var1=0;// compteur de temps
     private int varBombe=0;// temps initial du lancement de la bombe
     private int varMissile=0;// temps initial du lancement de la bombe
@@ -88,6 +88,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         for(Avion av: avions){
             av.dessine(g);
             av.dessineVie(vieAvion, g);
+ 
             if(av.y > getHeight()) {
                 av.exploser(g);
             }
@@ -127,10 +128,24 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 		  var1 = var1 + var ;
 		  // System.out.println("var 1= "+var1);
 		  // System.out.println("var = "+var);
-		
+		int r = (int) (Math.random()*100+1); //génération de nombres aléatoires pour les avions bot
+		 int p = (int) (Math.random()*50+1);
         for(Avion av: avions){
             av.avancer((double) vBackground);
             av.tourner();
+            
+            if (av instanceof AvionBot){//vérifier si l'avion est un bot
+				
+            if(r%7==0 && r%4==0) { //tirs à tps aléatoires
+            	av.tirerMissiles(); 	
+            }
+            
+            if(p%7==0) { //tirs à tps aléatoires
+            	av.tirerBalles();
+            }
+            
+		}
+            
 
             for (Avion av2: avions){ // vérifie avec s'il y a une collison avec un autre avion en vérifiant pour chaque autre avion
                 if (av != av2) {
@@ -151,8 +166,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
                 }
                 for (Missiles m: av.missiles) {
-                    if (m != null)
+                    if (m != null){
                         m.avancer((double) vBackground);
+					}
                         if(var1-varMissile>=2000) {
                         av.listemissilesuppr.add(m);
                     }
@@ -183,6 +199,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         }
         
         
+        
         xBackground -= vBackground; // position actualisée avec la vitesse de l'arrière plan
         repaint(); // appel a la methode paint 
          
@@ -205,10 +222,15 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         }if(code == KeyEvent.VK_SPACE) {
             avions.get(0).tirerMissiles();
             varMissile=var1;// Temps de lancement initial quand on appuie sur la touche;
-        }if(code == KeyEvent.VK_W) {
+        }
+        if(code == KeyEvent.VK_W) {
             avions.get(0).tirerBalles();
             varBalle=var1;
             }
+            
+        if(code == KeyEvent.VK_UP) {
+        	avions.get(0).accelerer();
+        }
     }
 
 
@@ -221,6 +243,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     }
     
 }
+
 
 
 

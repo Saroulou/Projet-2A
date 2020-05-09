@@ -143,6 +143,11 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         return Math.sqrt(Math.pow(x-avion.getX(), 2) + Math.pow(y-avion.getY(), 2)) < R_COLLISON;
     }
     
+    public void accelerer() {
+    	x=(x+this.l+2*vr*Math.cos(Math.toRadians(this.vtheta)))%this.l;
+        y=(y+this.h+2*vr*Math.sin(Math.toRadians(this.vtheta)))%this.h;
+    }
+    
     public double getX() {return this.x;}
     public double getY() {return this.y;}
     
