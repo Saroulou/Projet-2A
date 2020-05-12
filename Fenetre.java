@@ -30,7 +30,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     //JLabel explosions = new JLabel(); //contient les images des explosions des missiles
     private int varBalle=0;
     private int vieBot=10;
-    
+    private int scoreFinal;//donne le score final à stocker
+    private String texteScore;
+    private String avionChoisi=" ";
 // CONSTRUCTEURS
 
     public Fenetre(String nom, int width, int height){
@@ -39,7 +41,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         this.sBackground = new ImageIcon(getClass().getResource("Background.jpg"));
         this.iBackground = this.sBackground.getImage();
         this.xBackground=0;
-
+       
         setSize(width, height);
         setLocation(200,200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,7 +51,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         timer.start();
         
         avions=new ArrayList<Avion>();
-        avions.add(new Avion(getHeight(),getWidth(),this, "Joueur"));
+        avions.add(new Avion(getHeight(),getWidth(),this, "Joueur","avionJC"));
         for (int i = 0; i < NB_BOTS; i++) {
             avions.add(new AvionBot(avions,getHeight(),getWidth(),this, Integer.toString(i)));
         }
@@ -62,7 +64,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public Fenetre(){
         this("Skywar",1500,700);
     }
-    public Fenetre (String Background){
+    public Fenetre (String Background){ //constructeur avec choix background
 		super("Skywar");
         this.sBackground = new ImageIcon(getClass().getResource(Background+".jpg"));
         this.iBackground = this.sBackground.getImage();
@@ -77,7 +79,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         timer.start();
         
         avions=new ArrayList<Avion>();
-        avions.add(new Avion(getHeight(),getWidth(),this, "Joueur"));
+        avions.add(new Avion(getHeight(),getWidth(),this, "Joueur","avionJC"));
         for (int i = 0; i < NB_BOTS; i++) {
             avions.add(new AvionBot(avions,getHeight(),getWidth(),this, Integer.toString(i)));
         }
@@ -85,6 +87,35 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         addKeyListener(this);
 
         setVisible(true);
+		
+
+	}
+	 public Fenetre (String Background,String avionChoisi){//contructeur avec choix background et avion;
+		super("Skywar");
+        this.sBackground = new ImageIcon(getClass().getResource(Background+".jpg"));
+        this.iBackground = this.sBackground.getImage();
+        this.xBackground=0;
+        this.avionChoisi=avionChoisi;
+
+        setSize(1500, 700);
+        setLocation(200,200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        
+        timer=new Timer(var, this);
+        timer.start();
+        
+        avions=new ArrayList<Avion>();
+        avions.add(new Avion(getHeight(),getWidth(),this, "Joueur",avionChoisi));
+        for (int i = 0; i < NB_BOTS; i++) {
+            avions.add(new AvionBot(avions,getHeight(),getWidth(),this, Integer.toString(i)));
+        }
+
+        addKeyListener(this);
+
+        setVisible(true);
+        
+       
 		
 
 	}
@@ -102,11 +133,15 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 }
 
     public void paint (Graphics g){
-        g.setColor(new Color (6,55,58));
-        g.fillRect(0,0,this.getWidth(),this.getHeight());
+        //g.setColor(new Color (6,55,58));
+        //g.fillRect(598,628,this.getWidth(),this.getHeight());
         this.movingBackground(g);
         g.setColor(new Color (255,255,255));
-        g.drawRect(19, 49,this.getWidth()/7+1,this.getHeight()/15+1);
+        g.drawRect(599, 629,this.getWidth()/7+1,this.getHeight()/15+1);
+        
+        //score:
+        g.setColor(Color.white);
+        g.drawString(texteScore,850,650);
 
         
         for(Avion av: avions){
@@ -241,8 +276,11 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             av.listeballesuppr.clear();        
         }
         
+        if (avions.get(0).vie==0){
+			scoreFinal=var1/100;
+		}
         
-        
+        texteScore="Score: "+Integer.toString(var1/100);
         xBackground -= vBackground; // position actualisée avec la vitesse de l'arrière plan
         repaint(); // appel a la methode paint 
          

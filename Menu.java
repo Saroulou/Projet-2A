@@ -15,6 +15,7 @@ public class Menu extends JFrame implements ActionListener{
 	protected JButton magasin;
 	public Fenetre fenetrejeu;
 	public Mondes fenetreMondes;
+	public Magasin fenetreMagasin;
 
 		
 
@@ -29,10 +30,10 @@ public class Menu extends JFrame implements ActionListener{
 			//this.setLocationRelativeTo(null);
 			//this.validate();
 			this.setSize(987,593);
-			this.setLocation(450,200); //position de la fenetre sur l'écran
+			this.setLocation(200,200); //position de la fenetre sur l'écran
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			fenetreMondes=new Mondes();// instanciation de Mondes
-			
+			fenetreMagasin=new Magasin();
 			Toolkit kit = Toolkit.getDefaultToolkit();
 			
 			
@@ -56,8 +57,9 @@ public class Menu extends JFrame implements ActionListener{
 			Score.setBounds(260,250,200,50);
 			Score.setBackground(Color.white);
 			background.add(Score);
+			Score.addActionListener(this);
 			
-			mondes = new JButton("Mondes");
+			mondes = new JButton("mondes");
 			mondes.setBounds(260,400,200,50);
 			mondes.setBackground(Color.white);
 			background.add(mondes);
@@ -69,7 +71,7 @@ public class Menu extends JFrame implements ActionListener{
 			jouer.addActionListener(this);
 			background.add(jouer);
 			
-			magasin = new JButton("Magasin");
+			magasin = new JButton("magasin"); 
 			magasin.setBounds(530,400,200,50);
 			magasin.setBackground(Color.white);
 			background.add(magasin);
@@ -107,22 +109,32 @@ public class Menu extends JFrame implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==jouer) {
-				if(fenetreMondes.FondChoisi.equals(" ")){ //défini le background par défaut
+				if(fenetreMondes.FondChoisi.equals(" ") && fenetreMagasin.AvionChoisi.equals(" ")){ //défini le background par défaut
 				fenetrejeu = new Fenetre(); //appel du 2eme constructeur
 				fenetrejeu.setVisible(true);// rend la fenetre de jeu visible
-				}else{
+				}else if(fenetreMondes.FondChoisi.equals(" ")){
+				fenetrejeu = new Fenetre("Background",fenetreMagasin.AvionChoisi);//appel du 3eme constructeur
+				fenetrejeu.setVisible(true);
+				}else if(fenetreMagasin.AvionChoisi.equals(" ")){
 				fenetrejeu = new Fenetre(fenetreMondes.FondChoisi);//appel du 3eme constructeur
 				fenetrejeu.setVisible(true);
+				}else{
+				fenetrejeu = new Fenetre(fenetreMondes.FondChoisi,fenetreMagasin.AvionChoisi);//appel du 3eme constructeur
+				fenetrejeu.setVisible(true);
+					
 				}
 
 
 			}
 			if(e.getSource()==mondes){
 				fenetreMondes.setVisible(true);
-				// rend visible la fenetre du Mondes
-				
+				// rend visible la fenetre Mondes	
+			}
+			if(e.getSource()==magasin){
+				fenetreMagasin.setVisible(true);
+				// rend visible la fenetre du Magasin
+			}
 			
-		}
 	}
 		
 		public static void main(String[] args) {

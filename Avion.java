@@ -28,7 +28,8 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     protected final int nbMaxBalles = 2000;
     public Fenetre fenetre;
     protected int tempsDepartMissile = 0 ;
-    public int vie=10;
+    public int vie=100;
+    public String imAvion=" ";
         
     //image explosion de l'avion quand collision
     Toolkit T = Toolkit.getDefaultToolkit();
@@ -48,9 +49,14 @@ public class Avion extends Objet implements ActionListener, KeyListener{
 
     }
 
-    public Avion(int h, int l, Fenetre fenetre, String nom){
+    /*public Avion(int h, int l, Fenetre fenetre, String nom){
         this(100,100,10,0,h,l,fenetre, 30, nom);
-    }
+    }*/
+    public Avion(int h,int l,Fenetre fenetre, String nom, String imAvion){
+		this(100,100,10,0,h,l,fenetre, 30, nom);
+		this.imAvion=imAvion;
+		
+	}
 
     public String toString(){
         return "Avion " + this.nom;
@@ -65,7 +71,8 @@ public class Avion extends Objet implements ActionListener, KeyListener{
             new int[]{(int)(y+r*Math.sin(Math.toRadians(vtheta))),(int)(y+r*Math.sin(Math.toRadians(vtheta+120))),(int)(y+r*Math.sin(Math.toRadians(vtheta-120)))},
             3);*/
             
-        BufferedImage avionJC = LoadImage("avionJC.png");
+         
+		BufferedImage avionJC = LoadImage(imAvion+".png");//pour changer l'image de l'avion
         AffineTransform at = AffineTransform.getTranslateInstance(x-avionJC.getWidth()/2,y-avionJC.getHeight()/2);
         
         
@@ -76,8 +83,9 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         g2d.drawImage(avionJC,at,null);
         
 		g.setColor(new Color (58, 137, 35));
-
-        g.fill3DRect(20,50,this.vie*this.fenetre.getWidth()/70,this.fenetre.getHeight()/15,false);
+		if(vie>=0){
+        g.fill3DRect(600,630,this.vie*this.fenetre.getWidth()/700,this.fenetre.getHeight()/15,false);
+		}
     }
     
     BufferedImage LoadImage(String NomFichier) {
@@ -92,8 +100,8 @@ public class Avion extends Objet implements ActionListener, KeyListener{
 	}
 
     public void avancer (double vBackground){
-        x = (x + l + vr * Math.cos(Math.toRadians(vtheta)) - vBackground) % l; // si l'avion sort d'un côté, il rentre de l'autre
-        y = y + vr * Math.sin(Math.toRadians(vtheta));
+        x = (x + l + 1.2*vr * Math.cos(Math.toRadians(vtheta)) - vBackground) % l; // si l'avion sort d'un côté, il rentre de l'autre
+        y = y + 1.2*vr * Math.sin(Math.toRadians(vtheta));
         if (y < 0) {
             vtheta = 90; // vtheta += 180;
         }
@@ -133,8 +141,8 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     }
     
     public void accelerer() {
-    	x=(x+this.l+2*vr*Math.cos(Math.toRadians(this.vtheta)))%this.l;
-        y=(y+this.h+2*vr*Math.sin(Math.toRadians(this.vtheta)))%this.h;
+    	x=(x+this.l+1.5*vr*Math.cos(Math.toRadians(this.vtheta)))%this.l;
+        y=(y+this.h+1.5*vr*Math.sin(Math.toRadians(this.vtheta)))%this.h;
     }
     
     public double getX() {return this.x;}

@@ -23,7 +23,7 @@ public class Mondes extends JFrame implements ActionListener{
 	
 public Mondes () {
 			
-			this.setTitle("Mondes");
+			this.setTitle("mondes");
 			this.setLayout(null);
 			this.setResizable(false);
 			this.setSize(987,593);

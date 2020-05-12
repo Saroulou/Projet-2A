@@ -15,18 +15,21 @@ import java.awt.event.ActionListener;
 
 public class Magasin extends JFrame implements ActionListener{
 	
-	protected JButton Fond1;
-	protected JButton Fond2;
-	protected JButton Fond3;
-	protected String FondChoisi=" "; //accès au nom du fond choisi;
+	protected JButton Avion1;
+	protected JButton Avion2;
+	protected JButton Avion3;
+	protected JButton Avion4;
+	protected JButton Avion5;
+	protected JButton Avion6;
+	protected String AvionChoisi=" "; //accès au nom du Avion choisi;
 	
-public Magasin() {
+public Magasin () {
 			
 			this.setTitle("Magasin");
 			this.setLayout(null);
 			this.setResizable(false);
-			this.setSize(900,600);
-			this.setLocation(0,0); //position de la fenetre sur l'écran
+			this.setSize(987,593);
+			this.setLocation(450,200); //position de la fenetre sur l'écran
 			
 			Toolkit kit = Toolkit.getDefaultToolkit();
 			
@@ -47,44 +50,82 @@ public Magasin() {
 			background.setLayout(null);
 			background.setBounds(0,0,this.getWidth(),this.getHeight());	
 			
-			Fond1 = new JButton("Ocean");
-			Fond1.setBounds(100,225,200,50);
-			Fond1.setBackground(Color.white);
-			Fond1.addActionListener(this);
-			background.add(Fond1);
-			
-			JLabel ImFond1 = new JLabel();
-			ImageIcon im1 = new ImageIcon(new ImageIcon("Ocean.jpg").getImage().getScaledInstance(350, 175, Image.SCALE_DEFAULT)); // redimensionne l'image 
-			ImFond1.setIcon(im1);
-			ImFond1.setBounds(20,20,350,175);
-			background.add(ImFond1);	
-			
-			Fond2 = new JButton("Desert");
-			Fond2.setBounds(600,225,200,50);
-			Fond2.setBackground(Color.white);
-			Fond2.addActionListener(this);
-			background.add(Fond2);
+			Avion1 = new JButton("Avion1");
+			Avion1.setBounds(100,225,200,50);
+			Avion1.setBackground(Color.white);
+			Avion1.addActionListener(this);
+			background.add(Avion1);
 			
 			
-			Fond3 = new JButton("Foret");
-			Fond3.setBounds(350,500,200,50);
-			Fond3.setBackground(Color.white);
-			Fond3.addActionListener(this);
-			background.add(Fond3);
+			Avion2 = new JButton("Avion2");
+			Avion2.setBounds(100,500,200,50);
+			Avion2.setBackground(Color.white);
+			Avion2.addActionListener(this);
+			background.add(Avion2);
 			
-			JLabel ImFond3 = new JLabel();
-			ImageIcon im3 = new ImageIcon(new ImageIcon("Foret.jpg").getImage().getScaledInstance(350, 175, Image.SCALE_DEFAULT)); // redimensionne l'image 
-			ImFond3.setIcon(im3);
-			ImFond3.setBounds(275,300,350,175);
-			background.add(ImFond3);
 			
-			JLabel ImFond2 = new JLabel();
-			ImageIcon im2 = new ImageIcon(new ImageIcon("Desert.jpg").getImage().getScaledInstance(350, 175, Image.SCALE_DEFAULT)); // redimensionne l'image 
-			ImFond2.setIcon(im2);
-			ImFond2.setBounds(500,20,350,175);
-			background.add(ImFond2);	
+			Avion3 = new JButton("Avion3");
+			Avion3.setBounds(400,225,200,50);
+			Avion3.setBackground(Color.white);
+			Avion3.addActionListener(this);
+			background.add(Avion3);
 			
-			/** JLabel contenant le fond **/
+			Avion4 = new JButton("Avion4");
+			Avion4.setBounds(400,500,200,50);
+			Avion4.setBackground(Color.white);
+			Avion4.addActionListener(this);
+			background.add(Avion4);
+			
+			Avion5 = new JButton("Avion5");
+			Avion5.setBounds(700,225,200,50);
+			Avion5.setBackground(Color.white);
+			Avion5.addActionListener(this);
+			background.add(Avion5);
+			
+			Avion6 = new JButton("Avion6");
+			Avion6.setBounds(700,500,200,50);
+			Avion6.setBackground(Color.white);
+			Avion6.addActionListener(this);
+			background.add(Avion6);
+			
+			
+			JLabel ImAvion1 = new JLabel();
+			ImageIcon im1 = new ImageIcon(new ImageIcon("Avion1.png").getImage().getScaledInstance(175, 85, Image.SCALE_DEFAULT)); // redimensionne l'image 
+			ImAvion1.setIcon(im1);
+			ImAvion1.setBounds(100,20,350,175);
+			background.add(ImAvion1);	
+			
+			JLabel ImAvion2 = new JLabel();
+			ImageIcon im2 = new ImageIcon(new ImageIcon("Avion2.png").getImage().getScaledInstance(175, 85, Image.SCALE_DEFAULT)); // redimensionne l'image 
+			ImAvion2.setIcon(im2);
+			ImAvion2.setBounds(100,300,350,175);
+			background.add(ImAvion2);	
+			
+			JLabel ImAvion3 = new JLabel();
+			ImageIcon im3 = new ImageIcon(new ImageIcon("Avion3.png").getImage().getScaledInstance(175, 85, Image.SCALE_DEFAULT)); // redimensionne l'image 
+			ImAvion3.setIcon(im3);
+			ImAvion3.setBounds(400,20,350,175);
+			background.add(ImAvion3);
+			
+				JLabel ImAvion4 = new JLabel();
+			ImageIcon im4 = new ImageIcon(new ImageIcon("Avion4.png").getImage().getScaledInstance(175, 85, Image.SCALE_DEFAULT)); // redimensionne l'image 
+			ImAvion4.setIcon(im4);
+			ImAvion4.setBounds(400,300,350,175);
+			background.add(ImAvion4);	
+			
+			JLabel ImAvion5 = new JLabel();
+			ImageIcon im5 = new ImageIcon(new ImageIcon("Avion5.png").getImage().getScaledInstance(175, 85, Image.SCALE_DEFAULT)); // redimensionne l'image 
+			ImAvion5.setIcon(im5);
+			ImAvion5.setBounds(700,20,350,175);
+			background.add(ImAvion5);
+			
+			JLabel ImAvion6 = new JLabel();
+			ImageIcon im6 = new ImageIcon(new ImageIcon("Avion6.png").getImage().getScaledInstance(175, 85, Image.SCALE_DEFAULT)); // redimensionne l'image 
+			ImAvion6.setIcon(im6);
+			ImAvion6.setBounds(700,300,350,175);
+			background.add(ImAvion6);	
+			
+			/** JLabel contenant le Avion **/
 			JLabel image = new JLabel();
 			ImageIcon Imagee1 = new ImageIcon("Fond.jpg");
 			image.setIcon(Imagee1);
@@ -102,25 +143,35 @@ public Magasin() {
 		
 
 		public void actionPerformed(ActionEvent e) {
-			if(e.getSource()==Fond1) {
-				FondChoisi=Fond1.getText();
-				System.out.println(FondChoisi);
+			if(e.getSource()==Avion1) {
+				AvionChoisi=Avion1.getText();
+				System.out.println(AvionChoisi);
 			}
-			if(e.getSource()==Fond2) {
-				FondChoisi=Fond2.getText();
-				System.out.println(FondChoisi);
+			if(e.getSource()==Avion2) {
+				AvionChoisi=Avion2.getText();
+				System.out.println(AvionChoisi);
 			}
-			if(e.getSource()==Fond3) {
-				FondChoisi=Fond3.getText();
-				System.out.println(FondChoisi);
+			if(e.getSource()==Avion3) {
+				AvionChoisi=Avion3.getText();
+				System.out.println(AvionChoisi);
 			}	
+			if(e.getSource()==Avion4) {
+				AvionChoisi=Avion4.getText();
+				System.out.println(AvionChoisi);
+			}
+			if(e.getSource()==Avion5) {
+				AvionChoisi=Avion5.getText();
+				System.out.println(AvionChoisi);
+			}
+			if(e.getSource()==Avion6) {
+				AvionChoisi=Avion6.getText();
+				System.out.println(AvionChoisi);
+			}
+				
 		}
 		
 		public static void main (String[] args) {     
-        Magasin magasin=new Magasin();
+        Magasin mondes=new Magasin();
     }
 		
 }
-
-
-
