@@ -62,7 +62,32 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public Fenetre(){
         this("Skywar",1500,700);
     }
+    public Fenetre (String Background){
+		super("Skywar");
+        this.sBackground = new ImageIcon(getClass().getResource(Background+".jpg"));
+        this.iBackground = this.sBackground.getImage();
+        this.xBackground=0;
 
+        setSize(1500, 700);
+        setLocation(200,200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        
+        timer=new Timer(var, this);
+        timer.start();
+        
+        avions=new ArrayList<Avion>();
+        avions.add(new Avion(getHeight(),getWidth(),this, "Joueur"));
+        for (int i = 0; i < NB_BOTS; i++) {
+            avions.add(new AvionBot(avions,getHeight(),getWidth(),this, Integer.toString(i)));
+        }
+
+        addKeyListener(this);
+
+        setVisible(true);
+		
+
+	}
 // METHODES
 
     // permet de dessiner l'écran et de rajouter les images "à la suite".
@@ -173,7 +198,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
             for(Bombe b:av.listebombe){
                 if(b!=null){
-                    System.out.println("Bombe");
+                    System.out.println("Bombe, var1 = "+var1+"varBombe = "+varBombe+"vBackground = "+vBackground);
                     b.avancer(this.var1,varBombe,vBackground); //Ajout du temps dans la méthode tombe/avancer
                     if(b.estsorti()){
                         av.listebombesuppr.add(b);

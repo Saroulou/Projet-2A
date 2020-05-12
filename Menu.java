@@ -13,6 +13,7 @@ public class Menu extends JFrame implements ActionListener{
 	protected JButton jouer;
 	protected JButton magasin;
 	public Fenetre fenetrejeu;
+	public Magasin fenetreMagasin;
 
 		
 
@@ -20,7 +21,7 @@ public class Menu extends JFrame implements ActionListener{
 			
 			this.setTitle("SkyWar");
 			this.setLayout(null);
-			this.setVisible(true);
+			//this.setVisible(true);
 			this.setResizable(false);
 			//pour mettre la fenetre en full screen
 			//this.setSize(this.getToolkit().getScreenSize());
@@ -29,6 +30,7 @@ public class Menu extends JFrame implements ActionListener{
 			this.setSize(900,600);
 			this.setLocation(0,0); //position de la fenetre sur l'écran
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			fenetreMagasin=new Magasin();// instanciation du magasin
 			
 			Toolkit kit = Toolkit.getDefaultToolkit();
 			
@@ -59,6 +61,7 @@ public class Menu extends JFrame implements ActionListener{
 			magasin.setBounds(350,370,200,50);
 			magasin.setBackground(Color.white);
 			background.add(magasin);
+			magasin.addActionListener(this);
 			
 			JLabel title = new JLabel();
 			ImageIcon image2 = new ImageIcon("titrejeu2.png");
@@ -92,12 +95,23 @@ public class Menu extends JFrame implements ActionListener{
 
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==jouer) {
-				fenetrejeu = new Fenetre();
-				fenetrejeu.setVisible(true); //rend visible fenetre du jeu
+				if(fenetreMagasin.FondChoisi.equals(" ")){ //défini le background par défaut
+				fenetrejeu = new Fenetre(); //appel du 2eme constructeur
+				fenetrejeu.setVisible(true);// rend la fenetre de jeu visible
+				}else{
+				fenetrejeu = new Fenetre(fenetreMagasin.FondChoisi);//appel du 3eme constructeur
+				fenetrejeu.setVisible(true);
+				}
+
 
 			}
+			if(e.getSource()==magasin){
+				fenetreMagasin.setVisible(true);
+				// rend visible la fenetre du magasin
+				
 			
 		}
+	}
 		
 		public static void main(String[] args) {
 			new Menu();

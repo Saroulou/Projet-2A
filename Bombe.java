@@ -69,10 +69,10 @@ public class Bombe extends Objet {
     public void avancer(int var1, int varBombe, double vBackground){
 		int vartemps=(var1-varBombe);
 		//x=vrInit*Math.cos(Math.toRadians(vthetaInit))*Math.sqrt(2*(double)avion.h/acceleration);
-		x+=vrInit*Math.cos(Math.toRadians(vthetaInit)) - vBackground; // la vitesse reste constante
-		// System.out.println("x =" +x);
+		x+=vrInit*Math.cos(Math.toRadians(vthetaInit))-vBackground; // la vitesse reste constante
+		System.out.println("x =" +x+" vthetaInit = "+vthetaInit+" vrInit = "+vrInit);
 		y+=acceleration/2*Math.pow(vartemps*0.001,2)+vrInit*Math.abs(Math.sin(Math.toRadians(vthetaInit)))*vartemps*0.001;
-		// System.out.println("y = "+y);
+		System.out.println("y = "+y);
 		//y=acceleration/2*Math.pow(x/Math.sin(Math.toRadians(vthetaInit)),2)-(double)avion.h
 		//y+=acceleration/(2*Math.pow(vrInit,2))*Math.pow(x,2)*(1+Math.pow((Math.tan(Math.toRadians(vthetaInit))),2))-x*Math.tan(Math.toRadians(vthetaInit))-(double)this.avion.h;
 		
