@@ -27,7 +27,7 @@ public Mondes () {
 			this.setLayout(null);
 			this.setResizable(false);
 			this.setSize(987,593);
-			this.setLocation(450,200); //position de la fenetre sur l'écran
+			this.setLocation(200,200); //position de la fenetre sur l'écran
 			
 			Toolkit kit = Toolkit.getDefaultToolkit();
 			

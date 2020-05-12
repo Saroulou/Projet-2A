@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.JOptionPane;
+
 
 
 public class Fenetre extends JFrame implements ActionListener, KeyListener{
@@ -43,7 +47,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         this.xBackground=0;
        
         setSize(width, height);
-        setLocation(200,200);
+        setLocation(0,100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         
@@ -214,7 +218,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 System.out.println(obj);
                 if (av != obj) {
                     if (av.collison(obj)) {
-                        System.out.println("Collision entre " + av.toString() + " et " + obj.toString());
+                        //System.out.println("Collision entre " + av.toString() + " et " + obj.toString());
                         if(obj instanceof Bombe){
                             //av.vie=av.vie-obj.degatbombe;
                             av.vie=av.vie-3;
@@ -277,10 +281,21 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         }
         
         if (avions.get(0).vie==0){
-			scoreFinal=var1/100;
+			scoreFinal=var1/100; //score final
+			timer.stop(); //arreter le timer (figer le jeu)
+			JOptionPane jop = new JOptionPane();    	
+      int option = jop.showConfirmDialog(null, 
+        "GAME OVER! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
+        "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
+        if (option==JOptionPane.YES_OPTION){
+			this.setVisible(false);	
+		}else if(option==JOptionPane.NO_OPTION){
+			System.exit(0); //arreter le programme
 		}
+	}
         
         texteScore="Score: "+Integer.toString(var1/100);
+        System.out.println(avions.get(0).vie);
         xBackground -= vBackground; // position actualisée avec la vitesse de l'arrière plan
         repaint(); // appel a la methode paint 
          
