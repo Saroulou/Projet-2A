@@ -9,16 +9,16 @@ import javax.imageio.ImageIO;
 
 //import java.util.ArrayList;
 
-public class Missiles extends Avion { 
+public class Missiles extends Avion { // héritage à changer
     
     Toolkit T = Toolkit.getDefaultToolkit();
     Image im = T.getImage("explosion.gif");
     Image missile = T.getImage("missile.png");
     //private int tempsDepartMissile ;
-        public int degatsM=2;
+        // public int degatsM=2;
     
     public Missiles (double x, double y,double vr, double vtheta, int h, int l,Fenetre fenetre, String nom) {
-        super(x,y,vr,vtheta,h,l,fenetre, 10, nom);
+        super(x,y,vr,vtheta,h,l,fenetre, 10, nom, 2, 0.1);
 
     }
 

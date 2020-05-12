@@ -58,10 +58,10 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         timer.start();
         
         objets = new HashSet<Objet>();
-        Avion avionJ = new Avion(getHeight(),getWidth(),this, "Joueur","avionJC");
+        avionJ = new Avion(getHeight(),getWidth(),this, "Joueur","avionJC");
         objets.add(avionJ);
         for (int i = 0; i < NB_BOTS; i++) {
-            objets.add(new AvionBot(objets,getHeight(),getWidth(),this, Integer.toString(i)));
+            objets.add(new AvionBot(objets,avionJ,getHeight(),getWidth(),this, Integer.toString(i)));
         }
 
         addKeyListener(this);
@@ -73,7 +73,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         this("Skywar",1500,700);
     }
     public Fenetre (String Background){ //constructeur avec choix background
-		super("Skywar");
+        super("Skywar");
         this.sBackground = new ImageIcon(getClass().getResource(Background+".jpg"));
         this.iBackground = this.sBackground.getImage();
         this.xBackground=0;
@@ -86,20 +86,21 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         timer=new Timer(var, this);
         timer.start();
         
-        avions=new ArrayList<Avion>();
-        avions.add(new Avion(getHeight(),getWidth(),this, "Joueur","avionJC"));
+        objets = new HashSet<Objet>();
+        avionJ = new Avion(getHeight(),getWidth(),this, "Joueur","avionJC");
+        objets.add(avionJ);
         for (int i = 0; i < NB_BOTS; i++) {
-            avions.add(new AvionBot(avions,getHeight(),getWidth(),this, Integer.toString(i)));
+            objets.add(new AvionBot(objets,avionJ,getHeight(),getWidth(),this, Integer.toString(i)));
         }
 
         addKeyListener(this);
 
         setVisible(true);
-		
+        
 
-	}
-	public Fenetre (String Background,String avionChoisi){//contructeur avec choix background et avion;
-		super("Skywar");
+    }
+    public Fenetre (String Background,String avionChoisi){//contructeur avec choix background et avion;
+        super("Skywar");
         this.sBackground = new ImageIcon(getClass().getResource(Background+".jpg"));
         this.iBackground = this.sBackground.getImage();
         this.xBackground=0;
@@ -113,20 +114,19 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         timer=new Timer(var, this);
         timer.start();
         
-        avions=new ArrayList<Avion>();
-        avions.add(new Avion(getHeight(),getWidth(),this, "Joueur",avionChoisi));
+        objets = new HashSet<Objet>();
+        avionJ = new Avion(getHeight(),getWidth(),this, "Joueur","avionJC");
+        objets.add(avionJ);
         for (int i = 0; i < NB_BOTS; i++) {
-            avions.add(new AvionBot(avions,getHeight(),getWidth(),this, Integer.toString(i)));
+            objets.add(new AvionBot(objets,avionJ,getHeight(),getWidth(),this, Integer.toString(i)));
         }
 
         addKeyListener(this);
 
         setVisible(true);
         
-       
-		
 
-	}
+    }
 // METHODES
 
     // permet de dessiner l'écran et de rajouter les images "à la suite".
@@ -152,14 +152,14 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         g.drawString(texteScore,850,650);
 
         
-        for(Avion obj: objets){
+        for(Objet obj: objets){
             obj.dessine(g);
  
             if(obj.y > getHeight()) {
                 obj.exploser(g);
             }
             
-            if(obj instanceOf Missile && var1-varMissile>=1500) {
+            if(obj instanceof Missiles && var1-varMissile>=1500) {
                 obj.exploser(g);
             }
             obj.dessine(g);
@@ -173,53 +173,52 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
           // System.out.println("var 1= "+var1);
           // System.out.println("var = "+var);
         int r = (int) (Math.random()*100+1); //génération de nombres aléatoires pour les avions bot
-         int p = (int) (Math.random()*50+1);
+        int p = (int) (Math.random()*50+1);
+
+        HashSet<Objet> nvObjets = new HashSet<Objet>();
         for(Objet obj: objets){
-            obj.objancer((double) vBackground);
+            obj.avancer((double) vBackground);
             obj.tourner();
             
             if (obj instanceof AvionBot){//vérifier si l'objet est un bot
+                AvionBot av = (AvionBot) obj;
                 
                 if(r%7==0 && r%4==0) { //tirs à tps aléatoires
-                    objets.add(obj.tirerMissiles());     
+                    nvObjets.add(av.tirerMissiles());     
                 }
                 
                 if(p%7==0) { //tirs à tps aléatoires
-                    objets.add(obj.tirerBalles());
+                    nvObjets.add(av.tirerBalles());
                 }
-            
             }
 
             for (Objet obj2: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
                 System.out.println(obj2);
                 if (obj != obj2) {
-                    if (av.collison(obj2)) {
+                    if (obj.collison(obj2)) {
                         //System.out.println("Collision entre " + obj.toString() + " et " + obj2.toString());
-                        if (obj2 instanceof Avion){
-                            obj.vie=0;
-                        } else {
-                            obj.vie -= obj2.degats;
-                        }
+                        obj.vie -= obj2.degats;
                     }
                 }
             }
 
             obj.avancer((double) vBackground); // l'objet avance (méthode avancer() commune à tous les objets)
         }
+        objets.addAll(nvObjets);
         
         if (avionJ.vie==0){
-			scoreFinal=var1/100; //score final
-			timer.stop(); //arreter le timer (figer le jeu)
-			JOptionPane jop = new JOptionPane();    	
+            scoreFinal=var1/100; //score final
+            timer.stop(); //arreter le timer (figer le jeu)
+            JOptionPane jop = new JOptionPane();        
       int option = jop.showConfirmDialog(null, 
         "GAME OVER! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
         "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
         if (option==JOptionPane.YES_OPTION){
-			this.setVisible(false);	
-		}else if(option==JOptionPane.NO_OPTION){
-			System.exit(0); //arreter le programme
-		}
-	}
+            this.setVisible(false); 
+        }else if(option==JOptionPane.NO_OPTION){
+            System.exit(0); //arreter le programme
+        }
+    }
         
         texteScore="Score: "+Integer.toString(var1/100);
         System.out.println(avionJ.vie);

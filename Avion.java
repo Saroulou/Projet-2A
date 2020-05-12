@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -15,37 +16,36 @@ import java.io.File;
 
 public class Avion extends Objet implements ActionListener, KeyListener{
 
-    public ArrayList<Bombe> listebombe;
-    public ArrayList<Missiles> missiles;
-    public ArrayList <Bombe> listebombesuppr;
-    public ArrayList <Missiles> listemissilesuppr;
-    public ArrayList <Mitrailleuse> listeballesuppr;
+    // public ArrayList<Bombe> listebombe;
+    // public ArrayList<Missiles> missiles;
+    // public ArrayList <Bombe> listebombesuppr;
+    // public ArrayList <Missiles> listemissilesuppr;
+    // public ArrayList <Mitrailleuse> listeballesuppr;
     
-    public ArrayList<Mitrailleuse> balles;
+    // public ArrayList<Mitrailleuse> balles;
     protected int nbMissiles = 0;
     protected int nbBalles = 0;
     protected final int nbMaxMissiles = 7;
     protected final int nbMaxBalles = 2000;
     public Fenetre fenetre;
     protected int tempsDepartMissile = 0 ;
-    public int vie=100;
     public String imAvion=" ";
         
     //image explosion de l'avion quand collision
     Toolkit T = Toolkit.getDefaultToolkit();
-	Image im = T.getImage("explosion-gif-001.gif");
+    Image im = T.getImage("explosion-gif-001.gif");
  
 
-    public Avion (double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre, double r, String nom) {
-        super(x, y, vr, vtheta, h, l, r, nom);
+    public Avion (double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre, double r, String nom, double degats, double vie) {
+        super(x, y, vr, vtheta, h, l, r, nom, degats, vie);
         
         this.fenetre = fenetre;
-        listebombe=new ArrayList<Bombe>();          // ajouter des commentaires pour expliquer à quoi servent les différentes listes SVP
-        listebombesuppr=new ArrayList<>();
-        listemissilesuppr=new ArrayList<>();
-        listeballesuppr=new ArrayList<>();
-        missiles=new ArrayList<Missiles>();
-        balles=new ArrayList<Mitrailleuse>();
+        // listebombe=new ArrayList<Bombe>();          // ajouter des commentaires pour expliquer à quoi servent les différentes listes SVP
+        // listebombesuppr=new ArrayList<>();
+        // listemissilesuppr=new ArrayList<>();
+        // listeballesuppr=new ArrayList<>();
+        // missiles=new ArrayList<Missiles>();
+        // balles=new ArrayList<Mitrailleuse>();
 
     }
 
@@ -53,10 +53,10 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         this(100,100,10,0,h,l,fenetre, 30, nom);
     }*/
     public Avion(int h,int l,Fenetre fenetre, String nom, String imAvion){
-		this(100,100,10,0,h,l,fenetre, 30, nom);
-		this.imAvion=imAvion;
-		
-	}
+        this(100,100,10,0,h,l,fenetre, 30, nom, 50, 100);
+        this.imAvion=imAvion;
+        
+    }
 
     public String toString(){
         return "Avion " + this.nom;
@@ -72,7 +72,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
             3);*/
             
          
-		BufferedImage avionJC = LoadImage(imAvion+".png");//pour changer l'image de l'avion
+        BufferedImage avionJC = LoadImage(imAvion+".png");//pour changer l'image de l'avion
         AffineTransform at = AffineTransform.getTranslateInstance(x-avionJC.getWidth()/2,y-avionJC.getHeight()/2);
         
         
@@ -82,22 +82,22 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(avionJC,at,null);
         
-		g.setColor(new Color (58, 137, 35));
-		if(vie>=0){
-        g.fill3DRect(600,630,this.vie*this.fenetre.getWidth()/700,this.fenetre.getHeight()/15,false);
-		}
+        g.setColor(new Color (58, 137, 35));
+        if(vie>=0){
+        g.fill3DRect(600,630,(int)this.vie*this.fenetre.getWidth()/700,this.fenetre.getHeight()/15,false);
+        }
     }
     
     BufferedImage LoadImage(String NomFichier) {
-		BufferedImage img = null;
-		 try {
-	            img = ImageIO.read(new File(NomFichier));
-	        }
-	        catch (IOException e){
-	            e.printStackTrace();
-	        }
-		 return img;
-	}
+        BufferedImage img = null;
+         try {
+                img = ImageIO.read(new File(NomFichier));
+            }
+            catch (IOException e){
+                e.printStackTrace();
+            }
+         return img;
+    }
 
     public void avancer (double vBackground){
         x = (x + l + 1.2*vr * Math.cos(Math.toRadians(vtheta)) - vBackground) % l; // si l'avion sort d'un côté, il rentre de l'autre
@@ -113,67 +113,39 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     }
 
     public void exploser(Graphics g) {
-		g.drawImage(im,(int)(this.x-35),(int)(this.y-50),null);//this.x-x_im/2...
-	 }
+        g.drawImage(im,(int)(this.x-35),(int)(this.y-50),null);//this.x-x_im/2...
+     }
 
-    public void tirerBombe(){
-        Bombe bombe=new Bombe(this.x+50, this.y+100,h,l,this, fenetre, "");
-        listebombe.add(bombe);
+    public Bombe tirerBombe(){
+        return new Bombe(this.x+50, this.y+100,h,l,this, fenetre, "");
     }
 
    
-     public void tirerMissiles() {
-    	
+    public Missiles tirerMissiles() {
         if(nbMissiles<nbMaxMissiles) {
-            Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre, Integer.toString(nbMissiles));
-            missiles.add(missile);
             nbMissiles++;
+            return new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre, Integer.toString(nbMissiles));
         }
+        return null;
     }
     
-    public void tirerBalles() {
-    	
+    public Mitrailleuse tirerBalles() {
         if(nbBalles<nbMaxBalles) {
-            Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre, Integer.toString(nbBalles));
-            balles.add(balle);
             nbBalles++;
+            return new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre, Integer.toString(nbBalles));
         }
+        return null;
     }
     
     public void accelerer() {
-    	x=(x+this.l+1.5*vr*Math.cos(Math.toRadians(this.vtheta)))%this.l;
+        x=(x+this.l+1.5*vr*Math.cos(Math.toRadians(this.vtheta)))%this.l;
         y=(y+this.h+1.5*vr*Math.sin(Math.toRadians(this.vtheta)))%this.h;
     }
-    
-    public double getX() {return this.x;}
-    public double getY() {return this.y;}
-    
-    
-    
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void keyTyped(KeyEvent e) {}
+    public void keyPressed(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {}
+    public void actionPerformed(ActionEvent e) {}
 
 }
 

@@ -14,7 +14,7 @@ import java.io.File;
  
 
 public class Bombe extends Objet {
-		public double x;
+        public double x;
         public double y;
         public int h;
         public int l;
@@ -23,20 +23,20 @@ public class Bombe extends Objet {
         public final double acceleration=9.8;
         public double r;
         public Avion avion;
-		private final double vrInit;
-		private final double vthetaInit;
-		private final double xInit;
-		private final double yInit;
-		private int degatbombe=3;
+        private final double vrInit;
+        private final double vthetaInit;
+        private final double xInit;
+        private final double yInit;
+        // private int degatbombe=3;
     
     public Bombe (double x, double y,int h, int l, Avion avion, Fenetre fenetre, String nom){
-        super(x,y, 0.0, 0.0, h, l, 20, nom);
+        super(x,y, 0.0, 0.0, h, l, 20, nom, 3, 0.1);
         this.avion=avion;
-		this.vrInit=avion.vr;
-		this.vthetaInit=avion.vtheta;
-		this.xInit=avion.x;
-		this.yInit=avion.y;
-		
+        this.vrInit=avion.vr;
+        this.vthetaInit=avion.vtheta;
+        this.xInit=avion.x;
+        this.yInit=avion.y;
+        
     }
     
     public void dessine(Graphics g){
@@ -56,26 +56,26 @@ public class Bombe extends Objet {
     }
 
     private BufferedImage LoadImage(String NomFichier) {
-		BufferedImage img = null;
-		try {
+        BufferedImage img = null;
+        try {
             img = ImageIO.read(new File(NomFichier));
         }
         catch (IOException e){
             e.printStackTrace();
         }
-		return img;
-	}
+        return img;
+    }
     
     public void avancer(int var1, int varBombe, double vBackground){
-		int vartemps=(var1-varBombe);
-		//x=vrInit*Math.cos(Math.toRadians(vthetaInit))*Math.sqrt(2*(double)avion.h/acceleration);
-		x+=vrInit*Math.cos(Math.toRadians(vthetaInit))-vBackground; // la vitesse reste constante
-		System.out.println("x =" +x+" vthetaInit = "+vthetaInit+" vrInit = "+vrInit);
-		y+=acceleration/2*Math.pow(vartemps*0.001,2)+vrInit*Math.abs(Math.sin(Math.toRadians(vthetaInit)))*vartemps*0.001;
-		System.out.println("y = "+y);
-		//y=acceleration/2*Math.pow(x/Math.sin(Math.toRadians(vthetaInit)),2)-(double)avion.h
-		//y+=acceleration/(2*Math.pow(vrInit,2))*Math.pow(x,2)*(1+Math.pow((Math.tan(Math.toRadians(vthetaInit))),2))-x*Math.tan(Math.toRadians(vthetaInit))-(double)this.avion.h;
-		
+        int vartemps=(var1-varBombe);
+        //x=vrInit*Math.cos(Math.toRadians(vthetaInit))*Math.sqrt(2*(double)avion.h/acceleration);
+        x+=vrInit*Math.cos(Math.toRadians(vthetaInit))-vBackground; // la vitesse reste constante
+        System.out.println("x =" +x+" vthetaInit = "+vthetaInit+" vrInit = "+vrInit);
+        y+=acceleration/2*Math.pow(vartemps*0.001,2)+vrInit*Math.abs(Math.sin(Math.toRadians(vthetaInit)))*vartemps*0.001;
+        System.out.println("y = "+y);
+        //y=acceleration/2*Math.pow(x/Math.sin(Math.toRadians(vthetaInit)),2)-(double)avion.h
+        //y+=acceleration/(2*Math.pow(vrInit,2))*Math.pow(x,2)*(1+Math.pow((Math.tan(Math.toRadians(vthetaInit))),2))-x*Math.tan(Math.toRadians(vthetaInit))-(double)this.avion.h;
+        
     }
     
     public boolean estsorti (){

@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.util.HashSet;
 
 
 public class AvionBot extends Avion{
@@ -18,19 +19,19 @@ public class AvionBot extends Avion{
     public Avion avion;
 
 
-    public AvionBot(HashSet<Objets> objets,double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre, String nom) {
-        super(x,y, vr, vtheta, h, l, fenetre, 30, nom);
+    public AvionBot(HashSet<Objet> objets,Avion avion, double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre, String nom) {
+        super(x,y, vr, vtheta, h, l, fenetre, 30, nom, 50, 50);
         this.x=x;
         this.y=y;
-        this.avion = avions.get(0);
-        missiles=new ArrayList<Missiles>();
-        balles=new ArrayList<Mitrailleuse>();
-        listemissilesuppr=new ArrayList<>();
-        listeballesuppr=new ArrayList<>();
+        this.avion = avion;
+        // missiles=new ArrayList<Missiles>();
+        // balles=new ArrayList<Mitrailleuse>();
+        // listemissilesuppr=new ArrayList<>();
+        // listeballesuppr=new ArrayList<>();
     }
         
-    public AvionBot(ArrayList<Avion> avions, int h, int l,Fenetre fenetre, String nom){
-        this(avions,600,600,5,0,h,l,fenetre, nom); //initialiser coord. initiales au hasard
+    public AvionBot(HashSet<Objet> objets, Avion avion, int h, int l,Fenetre fenetre, String nom){
+        this(objets,avion,600,600,5,0,h,l,fenetre, nom); //à faire : initialiser coord. initiales au hasard
     }
 
     public String toString(){
@@ -70,58 +71,13 @@ public class AvionBot extends Avion{
     
    //@Fonction asservissement 
     public void tourner(){
-        
         double a = avion.getX()-this.x;
         double b = avion.getY()-this.y;
         double dir = Math.toDegrees(Math.atan2(b,a));
         vtheta = dir;
-
     }
-    
-	     public void tirerMissiles() {
-	    	
-	    	//if(direction avionBot est proche à un angle x de avionjoueur : tirer) 
-	    	
-	        if(nbMissiles<nbMaxMissilesBOT) {
-	            Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre,Integer.toString(nbMissiles));
-	            missiles.add(missile);
-	            nbMissiles++;
-	        }
-	    }
-	    
-	    public void tirerBalles() {
-	    	
-	        if(nbBalles<nbMaxBalles) {
-	            Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre, Integer.toString(nbBalles));
-	            balles.add(balle);
-	            nbBalles++;
-	        }
-	    }
 
     public void exploser(Graphics g) {
         g.drawImage(im,(int)(this.x-35),(int)(this.y-50),null);//this.x-x_im/2...
-     }
-    
-
-    // public void tirerMissiles() {
-        
-    //  //if(direction avionBot est proche à un angle x de avionjoueur : tirer) 
-        
-    //     if(nbMissiles<nbMaxMissilesBOT) {
-    //         Missiles missile = new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre);
-    //         missiles.add(missile);
-    //         nbMissiles++;
-    //     }
-    // }
-    
-    // public void tirerBalles() {
-        
-    //     if(nbBalles<nbMaxBalles) {
-    //         Mitrailleuse balle = new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre);
-    //         balles.add(balle);
-    //         nbBalles++;
-    //     }
-    // }
-    
-
     }
+}

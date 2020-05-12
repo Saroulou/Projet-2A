@@ -1,4 +1,6 @@
 
+import java.awt.*;
+
 public abstract class Objet {
 
     protected double x; //position
@@ -11,19 +13,22 @@ public abstract class Objet {
     protected int l;
     protected double rayon; // rayon de l'objet (utilisé pour les collisions)
     protected String nom;
+    protected double degats;
+    protected double vie;
 
-    public Objet(double x, double y, double vr, double vtheta, int h, int l, double r, String nom) {
+    public Objet(double x, double y, double vr, double vtheta, int h, int l, double r, String nom, double degats, double vie) {
         this.x=x;
         this.y=y;
         this.vr=vr;
         this.vtheta=vtheta;
         vToCartesien();
+
         this.h = h;
         this.l = l;
         this.nom = nom;
-
         this.rayon = r;
-
+        this.degats = degats;
+        this.vie = vie;
     }
 
     public String toString(){
@@ -50,6 +55,9 @@ public abstract class Objet {
     }
 
     public void tourner(){}
+
+    public void exploser(Graphics g) {}
+    public void dessine(Graphics g) {}
     
     public double getX() {return this.x;}
     public double getY() {return this.y;}
