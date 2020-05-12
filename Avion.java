@@ -114,7 +114,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
 
     public void exploser(Graphics g) {
         g.drawImage(im,(int)(this.x-35),(int)(this.y-50),null);//this.x-x_im/2...
-     }
+    }
 
     public Bombe tirerBombe(){
         return new Bombe(this.x+50, this.y+100,h,l,this, fenetre, "");
@@ -124,7 +124,10 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     public Missiles tirerMissiles() {
         if(nbMissiles<nbMaxMissiles) {
             nbMissiles++;
-            return new Missiles(x,y,2.5*vr,vtheta,h,l,fenetre, Integer.toString(nbMissiles));
+            return new Missiles(x + 100 * Math.cos(Math.toRadians(vtheta)),
+                                y + 100 * Math.sin(Math.toRadians(vtheta)),
+                                2.5 * vr, vtheta, h, l, fenetre, Integer.toString(nbMissiles)
+                               );
         }
         return null;
     }
@@ -132,7 +135,10 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     public Mitrailleuse tirerBalles() {
         if(nbBalles<nbMaxBalles) {
             nbBalles++;
-            return new Mitrailleuse(x,y,2*vr,vtheta,h,l,fenetre, Integer.toString(nbBalles));
+            return new Mitrailleuse(x + 100 * Math.cos(Math.toRadians(vtheta)),
+                                    y + 100 * Math.sin(Math.toRadians(vtheta)),
+                                    2 * vr, vtheta, h, l, fenetre, Integer.toString(nbMissiles)
+                                   );
         }
         return null;
     }

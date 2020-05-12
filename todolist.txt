@@ -2,3 +2,5 @@
 - unifier héritage Objet
 - explosions
 - implements avancer tout droit
+- fusionner les redondances dans les constructeurs de Fenetre
+- bombe avancer

@@ -18,11 +18,12 @@ import javax.swing.JOptionPane;
 
 public class Fenetre extends JFrame implements ActionListener, KeyListener{
     
-// ATTRIBUTS
+    // ATTRIBUTS
 
     // private ArrayList<Avion> avions;
     private Avion avionJ; // avion du joueur
     private HashSet<Objet> objets;
+    private HashSet<int[]> explosions; // 
     private final int NB_BOTS = 1; // nombre d'avions bots
     private Timer timer;
     private final int var=100;
@@ -40,7 +41,11 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private int scoreFinal;//donne le score final à stocker
     private String texteScore;
     private String avionChoisi=" ";
-// CONSTRUCTEURS
+
+    Toolkit T = Toolkit.getDefaultToolkit();
+    Image im = T.getImage("explosion-gif-001.gif");
+
+    // CONSTRUCTEURS
 
     public Fenetre(String nom, int width, int height){
 
@@ -63,6 +68,8 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         for (int i = 0; i < NB_BOTS; i++) {
             objets.add(new AvionBot(objets,avionJ,getHeight(),getWidth(),this, Integer.toString(i)));
         }
+
+        explosions = new HashSet<int[]>();
 
         addKeyListener(this);
 
@@ -93,6 +100,8 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             objets.add(new AvionBot(objets,avionJ,getHeight(),getWidth(),this, Integer.toString(i)));
         }
 
+        explosions = new HashSet<int[]>();
+
         addKeyListener(this);
 
         setVisible(true);
@@ -121,6 +130,8 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             objets.add(new AvionBot(objets,avionJ,getHeight(),getWidth(),this, Integer.toString(i)));
         }
 
+        explosions = new HashSet<int[]>();
+
         addKeyListener(this);
 
         setVisible(true);
@@ -138,7 +149,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         g.drawImage(this.iBackground, this.xBackground + this.largeurBackground, 0, null);
         g.drawImage(this.iBackground, this.xBackground+ this.largeurBackground * 2, 0, null);
         g.drawImage(this.iBackground, this.xBackground + this.largeurBackground * 3, 0, null);
-}
+    }
 
     public void paint (Graphics g){
         //g.setColor(new Color (6,55,58));
@@ -151,31 +162,31 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         g.setColor(Color.white);
         g.drawString(texteScore,850,650);
 
-        
         for(Objet obj: objets){
             obj.dessine(g);
- 
-            if(obj.y > getHeight()) {
-                obj.exploser(g);
-            }
             
             if(obj instanceof Missiles && var1-varMissile>=1500) {
                 obj.exploser(g);
             }
             obj.dessine(g);
         }
+
+        for (int[] coord:explosions) {
+            g.drawImage(im, coord[0] - 35, coord[1] - 50, null);
+        }
     }
 
 
     public void actionPerformed(ActionEvent e){
         //var1++;
-          var1 = var1 + var ;
-          // System.out.println("var 1= "+var1);
-          // System.out.println("var = "+var);
+        var1 = var1 + var ;
+        // System.out.println("var 1= "+var1);
+        // System.out.println("var = "+var);
         int r = (int) (Math.random()*100+1); //génération de nombres aléatoires pour les avions bot
         int p = (int) (Math.random()*50+1);
 
-        HashSet<Objet> nvObjets = new HashSet<Objet>();
+        HashSet<Objet> nvObjets = new HashSet<Objet>(); // nouveau objets créés
+        HashSet<Objet> ancObjets = new HashSet<Objet>(); // anciens objets détruits
         for(Objet obj: objets){
             obj.avancer((double) vBackground);
             obj.tourner();
@@ -193,39 +204,47 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             }
 
             for (Objet obj2: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
-                System.out.println(obj2);
+                // System.out.println(obj2);
                 if (obj != obj2) {
                     if (obj.collison(obj2)) {
-                        //System.out.println("Collision entre " + obj.toString() + " et " + obj2.toString());
+                        System.out.println("Collision entre " + obj.toString() + " et " + obj2.toString());
                         obj.vie -= obj2.degats;
+                        obj2.vie -= obj.degats;
                     }
                 }
             }
 
             obj.avancer((double) vBackground); // l'objet avance (méthode avancer() commune à tous les objets)
+
+            if (obj.vie <= 0 || obj.y > getHeight()) {
+                explosions.add(new int[]{(int)obj.getX(), (int)obj.getY()});
+                if (obj != avionJ) ancObjets.add(obj); // on met l'objet dans la liste des objets à supprimer seulement s'il ne s'agit pas de l'vion du joueur
+            }
         }
         objets.addAll(nvObjets);
+        objets.removeAll(ancObjets);
         
-        if (avionJ.vie==0){
+        if (avionJ.vie<=0){
             scoreFinal=var1/100; //score final
             timer.stop(); //arreter le timer (figer le jeu)
             JOptionPane jop = new JOptionPane();        
-      int option = jop.showConfirmDialog(null, 
-        "GAME OVER! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
-        "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
-        if (option==JOptionPane.YES_OPTION){
-            this.setVisible(false); 
-        }else if(option==JOptionPane.NO_OPTION){
-            System.exit(0); //arreter le programme
+            int option = jop.showConfirmDialog(null, 
+            "GAME OVER! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
+            "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
+            if (option==JOptionPane.YES_OPTION){
+                this.setVisible(false); 
+            }else if(option==JOptionPane.NO_OPTION){
+                System.exit(0); //arreter le programme
+            }
         }
-    }
         
         texteScore="Score: "+Integer.toString(var1/100);
-        System.out.println(avionJ.vie);
+        // System.out.println(avionJ.vie);
         xBackground -= vBackground; // position actualisée avec la vitesse de l'arrière plan
-        repaint(); // appel a la methode paint 
+
+        repaint(); // appel a la methode paint
          
-}
+    }
 
     public void keyPressed(KeyEvent e){ 
         int code = e.getKeyCode();
