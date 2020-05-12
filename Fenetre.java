@@ -57,9 +57,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         timer=new Timer(var, this);
         timer.start();
         
-        objets=new HashSet<Objet>();
-        avion = new Avion(getHeight(),getWidth(),this, "Joueur","avionJC");
-        objets.add(avion);
+        objets = new HashSet<Objet>();
+        Avion avionJ = new Avion(getHeight(),getWidth(),this, "Joueur","avionJC");
+        objets.add(avionJ);
         for (int i = 0; i < NB_BOTS; i++) {
             objets.add(new AvionBot(objets,getHeight(),getWidth(),this, Integer.toString(i)));
         }
@@ -98,7 +98,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 		
 
 	}
-	 public Fenetre (String Background,String avionChoisi){//contructeur avec choix background et avion;
+	public Fenetre (String Background,String avionChoisi){//contructeur avec choix background et avion;
 		super("Skywar");
         this.sBackground = new ImageIcon(getClass().getResource(Background+".jpg"));
         this.iBackground = this.sBackground.getImage();
@@ -152,40 +152,18 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         g.drawString(texteScore,850,650);
 
         
-        for(Avion av: avions){
-            av.dessine(g);
+        for(Avion obj: objets){
+            obj.dessine(g);
  
-            if(av.y > getHeight()) {
-                av.exploser(g);
+            if(obj.y > getHeight()) {
+                obj.exploser(g);
             }
             
-            for (Missiles m: av.missiles) {
-                if (m != null){
-                    m.dessine(g);
-                }
-                if(var1-varMissile>=1500) {
-                    m.exploser(g);
-
-                    //av.missiles.remove(m); 
-                }
-                // explosions.remove(m); //suppresion image de l'explosion
+            if(obj instanceOf Missile && var1-varMissile>=1500) {
+                obj.exploser(g);
             }
-            for (Mitrailleuse b: av.balles) {
-                if (b != null) {
-                    b.dessine(g);
-                }
-            /*if(var1-varBalle>=5000) {
-                av.balles.remove(b);
-                }*/
-            }
-  
-            for(Bombe b:av.listebombe){
-                 if(b!=null){
-                    b.dessine(g);
-                }
-            }
+            obj.dessine(g);
         }
-
     }
 
 
@@ -196,95 +174,40 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
           // System.out.println("var = "+var);
         int r = (int) (Math.random()*100+1); //génération de nombres aléatoires pour les avions bot
          int p = (int) (Math.random()*50+1);
-        for(Avion av: avions){
-            av.avancer((double) vBackground);
-            av.tourner();
+        for(Objet obj: objets){
+            obj.objancer((double) vBackground);
+            obj.tourner();
             
-            if (av instanceof AvionBot){//vérifier si l'avion est un bot
+            if (obj instanceof AvionBot){//vérifier si l'objet est un bot
                 
-            if(r%7==0 && r%4==0) { //tirs à tps aléatoires
-                av.tirerMissiles();     
+                if(r%7==0 && r%4==0) { //tirs à tps aléatoires
+                    objets.add(obj.tirerMissiles());     
+                }
+                
+                if(p%7==0) { //tirs à tps aléatoires
+                    objets.add(obj.tirerBalles());
+                }
+            
             }
-            
-            if(p%7==0) { //tirs à tps aléatoires
-                av.tirerBalles();
-            }
-            
-        }
-            
 
-            ArrayList<Objet> objets = new ArrayList<Objet>(avions); // liste de tous les objets
-            objets.addAll(av.listebombe);
-            objets.addAll(av.missiles);
-            objets.addAll(av.balles);
-
-            for (Objet obj: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
-                System.out.println(obj);
-                if (av != obj) {
-                    if (av.collison(obj)) {
-                        //System.out.println("Collision entre " + av.toString() + " et " + obj.toString());
-                        if(obj instanceof Bombe){
-                            //av.vie=av.vie-obj.degatbombe;
-                            av.vie=av.vie-3;
-                        } else if (obj instanceof Missiles){
-                            //av.vie=av.vie-obj.degatsM;
-                            av.vie=av.vie-2;
-                        }else if (obj instanceof Mitrailleuse){
-                            //av.vie=av.vie-obj.degatMitr;
-                            av.vie=av.vie-1;
-                        }else if (obj instanceof Avion){
-                            av.vie=0;
+            for (Objet obj2: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
+                System.out.println(obj2);
+                if (obj != obj2) {
+                    if (av.collison(obj2)) {
+                        //System.out.println("Collision entre " + obj.toString() + " et " + obj2.toString());
+                        if (obj2 instanceof Avion){
+                            obj.vie=0;
+                        } else {
+                            obj.vie -= obj2.degats;
                         }
                     }
                 }
             }
 
-            for(Bombe b:av.listebombe){
-                if(b!=null){
-                    System.out.println("Bombe, var1 = "+var1+"varBombe = "+varBombe+"vBackground = "+vBackground);
-                    b.avancer(this.var1,varBombe,vBackground); //Ajout du temps dans la méthode tombe/avancer
-                    if(b.estsorti()){
-                        av.listebombesuppr.add(b);
-
-                        }
-
-                    }
-
-                }
-                for (Missiles m: av.missiles) {
-                    if (m != null){
-                        m.avancer((double) vBackground);
-                    }
-                        if(var1-varMissile>=2000) {
-                        av.listemissilesuppr.add(m);
-                    }
-
-                }
-                for (Mitrailleuse b: av.balles) {
-                    if (b != null)
-                        b.avancer((double) vBackground);
-                        if(var1-varBalle>=5000) {
-                    av.listeballesuppr.add(b);
-                    }
-                }
-                 for(Missiles m: av.listemissilesuppr){
-                av.missiles.remove(m);
-                
-            }
-            for(Mitrailleuse b: av.listeballesuppr){
-                av.balles.remove(b);
-                
-            }
-            for(Bombe b: av.listebombesuppr){
-                av.listebombe.remove(b);
-            }
-            
-            av.listebombesuppr.clear();  
-            av.listemissilesuppr.clear(); 
-            av.listeballesuppr.clear();        
+            obj.avancer((double) vBackground); // l'objet avance (méthode avancer() commune à tous les objets)
         }
         
-        if (avions.get(0).vie==0){
+        if (avionJ.vie==0){
 			scoreFinal=var1/100; //score final
 			timer.stop(); //arreter le timer (figer le jeu)
 			JOptionPane jop = new JOptionPane();    	
@@ -299,7 +222,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 	}
         
         texteScore="Score: "+Integer.toString(var1/100);
-        System.out.println(avions.get(0).vie);
+        System.out.println(avionJ.vie);
         xBackground -= vBackground; // position actualisée avec la vitesse de l'arrière plan
         repaint(); // appel a la methode paint 
          
@@ -308,28 +231,24 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public void keyPressed(KeyEvent e){ 
         int code = e.getKeyCode();
 
-        if(code==KeyEvent.VK_LEFT){
-            avions.get(0).tourner(-10);
-
-        }else if(code == KeyEvent.VK_RIGHT){
-
-            avions.get(0).tourner(10);
-
-        }else if(code==KeyEvent.VK_DOWN){
-        avions.get(0).tirerBombe();
-        varBombe=var1;
-        
-        }if(code == KeyEvent.VK_SPACE) {
-            avions.get(0).tirerMissiles();
+        if (code==KeyEvent.VK_LEFT) {
+            avionJ.tourner(-10);
+        } else if (code == KeyEvent.VK_RIGHT) {
+            avionJ.tourner(10);
+        } else if (code==KeyEvent.VK_DOWN) {
+            avionJ.tirerBombe();
+            varBombe=var1;
+        } if (code == KeyEvent.VK_SPACE) {
+            objets.add(avionJ.tirerMissiles());
             varMissile=var1;// Temps de lancement initial quand on appuie sur la touche;
         }
         if(code == KeyEvent.VK_W) {
-            avions.get(0).tirerBalles();
+            objets.add(avionJ.tirerBalles());
             varBalle=var1;
             }
             
         if(code == KeyEvent.VK_UP) {
-            avions.get(0).accelerer();
+            avionJ.accelerer();
         }
     }
 
