@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.util.ArrayList;
+import java.util.HashSet;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -19,7 +20,9 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     
 // ATTRIBUTS
 
-    private ArrayList<Avion> avions;
+    // private ArrayList<Avion> avions;
+    private Avion avionJ; // avion du joueur
+    private HashSet<Objet> objets;
     private final int NB_BOTS = 1; // nombre d'avions bots
     private Timer timer;
     private final int var=100;
@@ -54,10 +57,11 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         timer=new Timer(var, this);
         timer.start();
         
-        avions=new ArrayList<Avion>();
-        avions.add(new Avion(getHeight(),getWidth(),this, "Joueur","avionJC"));
+        objets=new HashSet<Objet>();
+        avion = new Avion(getHeight(),getWidth(),this, "Joueur","avionJC");
+        objets.add(avion);
         for (int i = 0; i < NB_BOTS; i++) {
-            avions.add(new AvionBot(avions,getHeight(),getWidth(),this, Integer.toString(i)));
+            objets.add(new AvionBot(objets,getHeight(),getWidth(),this, Integer.toString(i)));
         }
 
         addKeyListener(this);

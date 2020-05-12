@@ -18,7 +18,7 @@ public class AvionBot extends Avion{
     public Avion avion;
 
 
-    public AvionBot(ArrayList<Avion> avions,double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre, String nom) {
+    public AvionBot(HashSet<Objets> objets,double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre, String nom) {
         super(x,y, vr, vtheta, h, l, fenetre, 30, nom);
         this.x=x;
         this.y=y;
