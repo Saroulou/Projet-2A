@@ -47,7 +47,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         this.xBackground=0;
        
         setSize(width, height);
-        setLocation(0,100);
+        setLocation(200,200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         
@@ -160,6 +160,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                     m.dessine(g);
                 }
                 if(var1-varMissile>=1500) {
+					Audio.playSound("/son/explosion.wav");
                     m.exploser(g);
 
                     //av.missiles.remove(m); 
@@ -283,6 +284,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         }
         
         if (avions.get(0).vie==0){
+			Audio.playSound("/son/gameover.wav"); 
 			scoreFinal=var1/100; //score final
 			timer.stop(); //arreter le timer (figer le jeu)
 			JOptionPane jop = new JOptionPane();    	
@@ -290,8 +292,10 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         "GAME OVER! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
         "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
         if (option==JOptionPane.YES_OPTION){
+			Audio.playSound("/son/click.wav");
 			this.setVisible(false);	
 		}else if(option==JOptionPane.NO_OPTION){
+			Audio.playSound("/son/click.wav");
 			System.exit(0); //arreter le programme
 		}
 	}
@@ -328,19 +332,23 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             avions.get(0).tourner(10);
 
         }else if(code==KeyEvent.VK_DOWN){
+		Audio.playSound("/son/bombe.wav");
         avions.get(0).tirerBombe();
         varBombe=var1;
         
         }if(code == KeyEvent.VK_SPACE) {
+			Audio.playSound("/son/missile.wav");
             avions.get(0).tirerMissiles();
             varMissile=var1;// Temps de lancement initial quand on appuie sur la touche;
         }
         if(code == KeyEvent.VK_W) {
+			Audio.playSound("/son/balles.wav");
             avions.get(0).tirerBalles();
             varBalle=var1;
             }
             
         if(code == KeyEvent.VK_UP) {
+			Audio.playSound("/son/boost.wav");
             avions.get(0).accelerer();
         }
     }

@@ -8,7 +8,8 @@ import java.awt.event.ActionListener;
 @SuppressWarnings("serial")
 public class Menu extends JFrame implements ActionListener{
 
-
+	protected JOptionPane BestScore;
+	public JFrame frame;
 	protected JButton mondes;
 	protected JButton Score;
 	protected JButton jouer;
@@ -30,7 +31,7 @@ public class Menu extends JFrame implements ActionListener{
 			//this.setLocationRelativeTo(null);
 			//this.validate();
 			this.setSize(987,593);
-			this.setLocation(200,200); //position de la fenetre sur l'écran
+			this.setLocation(450,250); //position de la fenetre sur l'écran
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			fenetreMondes=new Mondes();// instanciation de Mondes
 			fenetreMagasin=new Magasin();
@@ -102,13 +103,19 @@ public class Menu extends JFrame implements ActionListener{
 			panneauGlobal.add(background);
 			this.add(panneauGlobal);
 			this.setVisible(true);
-
+			Audio.playSoundL("/son/musiquedefond.wav"); 
+			frame= new JFrame();// fenetre score
+			frame.setBounds(530,250,200,50);
+			frame.setBackground(Color.white);
+			background.add(frame);
 		}
 		
 		
 
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==jouer) {
+				Audio.playSound("/son/click.wav"); 
+				//Audio.playSound("/son/song.wav");
 				if(fenetreMondes.FondChoisi.equals(" ") && fenetreMagasin.AvionChoisi.equals(" ")){ //défini le background par défaut
 				fenetrejeu = new Fenetre(); //appel du 2eme constructeur
 				fenetrejeu.setVisible(true);// rend la fenetre de jeu visible
@@ -127,12 +134,20 @@ public class Menu extends JFrame implements ActionListener{
 
 			}
 			if(e.getSource()==mondes){
+				Audio.playSound("/son/click.wav");
 				fenetreMondes.setVisible(true);
+				
 				// rend visible la fenetre Mondes	
 			}
 			if(e.getSource()==magasin){
+				Audio.playSound("/son/click.wav");
 				fenetreMagasin.setVisible(true);
 				// rend visible la fenetre du Magasin
+			}
+			if(e.getSource ()==Score){
+				Audio.playSound("/son/click.wav");
+				BestScore.showMessageDialog(frame,"Best Score=");
+				// donne le meilleure score obtenue 
 			}
 			
 	}

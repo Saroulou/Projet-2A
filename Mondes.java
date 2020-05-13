@@ -27,7 +27,7 @@ public Mondes () {
 			this.setLayout(null);
 			this.setResizable(false);
 			this.setSize(987,593);
-			this.setLocation(200,200); //position de la fenetre sur l'écran
+			this.setLocation(450,250); //position de la fenetre sur l'écran
 			
 			Toolkit kit = Toolkit.getDefaultToolkit();
 			
@@ -118,20 +118,28 @@ public Mondes () {
 
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==Fond1) {
+				Audio.playSound("/son/click.wav");
 				FondChoisi=Fond1.getText();
 				System.out.println(FondChoisi);
+				this.setVisible(false);
 			}
 			if(e.getSource()==Fond2) {
+				Audio.playSound("/son/click.wav");
 				FondChoisi=Fond2.getText();
 				System.out.println(FondChoisi);
+				this.setVisible(false);
 			}
 			if(e.getSource()==Fond3) {
+				Audio.playSound("/son/click.wav");
 				FondChoisi=Fond3.getText();
 				System.out.println(FondChoisi);
+				this.setVisible(false);
 			}	
 			if(e.getSource()==Fond4) {
+				Audio.playSound("/son/click.wav");
 				FondChoisi=Fond4.getText();
 				System.out.println(FondChoisi);
+				this.setVisible(false);
 			}	
 		}
 		
