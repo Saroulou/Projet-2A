@@ -293,7 +293,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
         if (option==JOptionPane.YES_OPTION){
 			Audio.playSound("/son/click.wav");
-			this.setVisible(false);	
+			this.dispose();
 		}else if(option==JOptionPane.NO_OPTION){
 			Audio.playSound("/son/click.wav");
 			System.exit(0); //arreter le programme
@@ -308,7 +308,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         "WINN! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
         "Gagné!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
         if (option==JOptionPane.YES_OPTION){
-			this.setVisible(false);	
+			this.dispose();	
 		}else if(option==JOptionPane.NO_OPTION){
 			System.exit(0); //arreter le programme
 		}

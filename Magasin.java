@@ -147,37 +147,37 @@ public Magasin () {
 				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion1.getText();
 				System.out.println(AvionChoisi);
-				this.setVisible(false);
+				this.dispose();
 			}
 			if(e.getSource()==Avion2) {
 				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion2.getText();
 				System.out.println(AvionChoisi);
-				this.setVisible(false);
+				this.dispose();
 			}
 			if(e.getSource()==Avion3) {
 				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion3.getText();
 				System.out.println(AvionChoisi);
-				this.setVisible(false);
+				this.dispose();
 			}	
 			if(e.getSource()==Avion4) {
 				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion4.getText();
 				System.out.println(AvionChoisi);
-				this.setVisible(false);
+				this.dispose();
 			}
 			if(e.getSource()==Avion5) {
 				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion5.getText();
 				System.out.println(AvionChoisi);
-				this.setVisible(false);
+				this.dispose();
 			}
 			if(e.getSource()==Avion6) {
 				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion6.getText();
 				System.out.println(AvionChoisi);
-				this.setVisible(false); //Rendre la fenetre invisible après le clic
+				this.dispose(); //Rendre la fenetre invisible après le clic
 			}
 				
 		}

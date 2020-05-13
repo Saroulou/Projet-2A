@@ -121,25 +121,25 @@ public Mondes () {
 				Audio.playSound("/son/click.wav");
 				FondChoisi=Fond1.getText();
 				System.out.println(FondChoisi);
-				this.setVisible(false);
+				this.dispose();
 			}
 			if(e.getSource()==Fond2) {
 				Audio.playSound("/son/click.wav");
 				FondChoisi=Fond2.getText();
 				System.out.println(FondChoisi);
-				this.setVisible(false);
+				this.dispose();
 			}
 			if(e.getSource()==Fond3) {
 				Audio.playSound("/son/click.wav");
 				FondChoisi=Fond3.getText();
 				System.out.println(FondChoisi);
-				this.setVisible(false);
+				this.dispose();
 			}	
 			if(e.getSource()==Fond4) {
 				Audio.playSound("/son/click.wav");
 				FondChoisi=Fond4.getText();
 				System.out.println(FondChoisi);
-				this.setVisible(false);
+				this.dispose();
 			}	
 		}
 		
