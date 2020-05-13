@@ -17,9 +17,13 @@ public class Missiles extends Avion { // héritage à changer
     //private int tempsDepartMissile ;
         // public int degatsM=2;
     
-    public Missiles (double x, double y,double vr, double vtheta, int h, int l,Fenetre fenetre, String nom) {
-        super(x,y,vr,vtheta,h,l,fenetre, 10, nom, 2, 0.1);
+    public Missiles (double x, double y,double vr, double vtheta, int h, int l,Fenetre fenetre, double rayon, String nom, double degats, double vie, int t) {
+        super(x,y,vr,vtheta,h,l,fenetre, 10, nom, degats, vie);
+        this.tLancement = t;
+    }
 
+    public Missiles (double x, double y,double vr, double vtheta, int h, int l,Fenetre fenetre, String nom, int t) {
+        this(x,y,vr,vtheta,h,l,fenetre, 10, nom, 2, 0.1, t);
     }
 
     public String toString(){

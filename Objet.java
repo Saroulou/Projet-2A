@@ -15,6 +15,7 @@ public abstract class Objet {
     protected String nom;
     protected double degats;
     protected double vie;
+    protected int tLancement;
 
     public Objet(double x, double y, double vr, double vtheta, int h, int l, double r, String nom, double degats, double vie) {
         this.x=x;
@@ -44,8 +45,8 @@ public abstract class Objet {
         vtheta = Math.atan2(vy, vx);
     }
     protected void vToCartesien() {
-        vx = vr * Math.cos(vtheta);
-        vx = vr * Math.sin(vtheta);
+        vx = vr * Math.cos(Math.toRadians(vtheta));
+        vy = vr * Math.sin(Math.toRadians(vtheta));
     }
 
     public void avancer (double vBackground){}
@@ -68,4 +69,5 @@ public abstract class Objet {
     public double getRayon() {return this.rayon;}
     public double getVie() {return this.vie;}
     public double getDegats() {return this.degats;}
+    public int getT() {return tLancement;}
 }

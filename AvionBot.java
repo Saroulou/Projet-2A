@@ -31,7 +31,7 @@ public class AvionBot extends Avion{
     }
         
     public AvionBot(HashSet<Objet> objets, Avion avion, int h, int l,Fenetre fenetre, String nom){
-        this(objets,avion,600,600,5,0,h,l,fenetre, nom); //à faire : initialiser coord. initiales au hasard
+        this(objets,avion,(int)(Math.random()*(fenetre.getWidth()-200))+200,(int)(Math.random()*(fenetre.getWidth()-200))+200,5,0,h,l,fenetre, nom); //à faire : initialiser coord. initiales au hasard
     }
 
     public String toString(){

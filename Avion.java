@@ -111,28 +111,29 @@ public class Avion extends Objet implements ActionListener, KeyListener{
 
     }
 
-    public Bombe tirerBombe(){
-        return new Bombe(this.x+50, this.y+100,h,l,this, fenetre, "");
+    public Bombe tirerBombe(int t){
+        System.out.println("Bombe !");
+        return new Bombe(this.x, this.y+100, vr, vtheta, h, l, fenetre, "", t);
     }
 
    
-    public Missiles tirerMissiles() {
+    public Missiles tirerMissiles(int t) {
         if(nbMissiles<nbMaxMissiles) {
             nbMissiles++;
             return new Missiles(x + 100 * Math.cos(Math.toRadians(vtheta)),
                                 y + 100 * Math.sin(Math.toRadians(vtheta)),
-                                2.5 * vr, vtheta, h, l, fenetre, Integer.toString(nbMissiles)
+                                2.5 * vr, vtheta, h, l, fenetre, Integer.toString(nbMissiles), t
                                );
         }
         return null;
     }
     
-    public Mitrailleuse tirerBalles() {
+    public Mitrailleuse tirerBalles(int t) {
         if(nbBalles<nbMaxBalles) {
             nbBalles++;
             return new Mitrailleuse(x + 100 * Math.cos(Math.toRadians(vtheta)),
                                     y + 100 * Math.sin(Math.toRadians(vtheta)),
-                                    2 * vr, vtheta, h, l, fenetre, Integer.toString(nbMissiles)
+                                    2 * vr, vtheta, h, l, fenetre, Integer.toString(nbMissiles), t
                                    );
         }
         return null;

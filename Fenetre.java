@@ -23,7 +23,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private Avion avionJ; // avion du joueur
     private HashSet<Objet> objets;
     private HashSet<int[]> explosions; // 
-    private final int NB_BOTS = 1; // nombre d'avions bots
+    private final int NB_BOTS = 2; // nombre d'avions bots
     private Timer timer;
     private final int var=100;
     private ImageIcon sBackground; // permet de stocker l'image du fond d'écran
@@ -32,10 +32,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public int xBackground; // permet de determiner l'abcisse de l'image 
     public final int vBackground =5; // vitesse de déplacement de l'arrière-plan
     private int var1=0;// compteur de temps
-    private int varBombe=0;// temps initial du lancement de la bombe
-    private int varMissile=0;// temps initial du lancement de la bombe
     //JLabel explosions = new JLabel(); //contient les images des explosions des missiles
-    private int varBalle=0;
     private int scoreFinal;//donne le score final à stocker
     private String texteScore="0";
     private String avionChoisi=" ";
@@ -53,7 +50,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         this.xBackground=0;
        
         setSize(width, height);
-        setLocation(200,200);
+        // setLocation(200,200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         
@@ -164,7 +161,6 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
         HashSet<int[]> exploFini = new HashSet<int[]>();
         for (int[] coord:explosions) {
-            System.out.println(coord[0] + " " + coord[1]);
             g.drawImage(im, coord[0] - 35, coord[1] - 50, null);
             coord[2] --;
             if (coord[2] <= 0) {
@@ -176,10 +172,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
 
     public void actionPerformed(ActionEvent e){
-        //var1++;
-        var1 = var1 + var ;
-        // System.out.println("var 1= "+var1);
-        // System.out.println("var = "+var);
+        var1 += var ;
         int r = (int) (Math.random()*100+1); //génération de nombres aléatoires pour les avions bot
         int p = (int) (Math.random()*50+1);
 
@@ -194,19 +187,17 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                     AvionBot av = (AvionBot) obj;
                     
                     if(r%7==0 && r%4==0) { //tirs à tps aléatoires
-                        nvObjets.add(av.tirerMissiles());     
+                        nvObjets.add(av.tirerMissiles(var1));     
                     }
                     
                     if(p%7==0) { //tirs à tps aléatoires
-                        nvObjets.add(av.tirerBalles());
+                        nvObjets.add(av.tirerBalles(var1));
                     }
                 }
 
                 for (Objet obj2: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
-                    // System.out.println(obj2);
-                    if (obj != obj2 && obj2 != null) {
+                    if (obj2 != null && obj != obj2 && !(obj instanceof AvionBot && obj instanceof AvionBot)) {
                         if (obj.collison(obj2)) {
-                            // System.out.println("Collision entre " + obj.toString() + " et " + obj2.toString());
                             obj.prendreDegats(obj2.getDegats());
                             obj2.prendreDegats(obj.getDegats());
                         }
@@ -215,15 +206,16 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
                 obj.avancer((double) vBackground); // l'objet avance (méthode avancer() commune à tous les objets)
 
-                if (obj.getVie() <= 0 || obj.getY() > getHeight() || (obj instanceof Missiles && var1-varMissile>=1500)) {
-                    explosions.add(new int[]{(int)obj.getX(), (int)obj.getY(), 10});
+                if (obj.getVie() <= 0 || obj.getY() >= getHeight() 
+                    || ((obj instanceof Missiles || obj instanceof Mitrailleuse) && var1-obj.getT()>=1500)) {
+                    explosions.add(new int[]{(int)obj.getX(), (int)obj.getY(), 3});
                     if (obj != avionJ) ancObjets.add(obj); // on met l'objet dans la liste des objets à supprimer seulement s'il ne s'agit pas de l'vion du joueur
                 }
             }
         }
         objets.addAll(nvObjets);
         objets.removeAll(ancObjets);
-        
+
         if (avionJ.getVie()<=0){
             Audio.playSound("/son/gameover.wav"); 
             scoreFinal=var1/100; //score final
@@ -273,20 +265,14 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             avionJ.tourner(10);
         } else if (code==KeyEvent.VK_DOWN) {
         Audio.playSound("/son/bombe.wav");
-            avionJ.tirerBombe();
-            varBombe=var1;
-        } if (code == KeyEvent.VK_SPACE) {
+            objets.add(avionJ.tirerBombe(var1));
+        } else if (code == KeyEvent.VK_SPACE) {
             Audio.playSound("/son/missile.wav");
-            objets.add(avionJ.tirerMissiles());
-            varMissile=var1;// Temps de lancement initial quand on appuie sur la touche;
-        }
-        if(code == KeyEvent.VK_W) {
+            objets.add(avionJ.tirerMissiles(var1));
+        } else if (code == KeyEvent.VK_W) {
             Audio.playSound("/son/balles.wav");
-            objets.add(avionJ.tirerBalles());
-            varBalle=var1;
-        }
-            
-        if(code == KeyEvent.VK_UP) {
+            objets.add(avionJ.tirerBalles(var1));
+        } else if(code == KeyEvent.VK_UP) {
             Audio.playSound("/son/boost.wav");
             avionJ.accelerer();
         }
@@ -296,7 +282,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public void keyTyped(KeyEvent e){}
     
     public static void main (String[] args) {     
-        Fenetre fenetre=new Fenetre();
+        Fenetre fenetre = new Fenetre();
     }
     
 }
