@@ -25,7 +25,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
     // public ArrayList<Mitrailleuse> balles;
     protected int nbMissiles = 0;
     protected int nbBalles = 0;
-    protected final int nbMaxMissiles = 7;
+    // protected final int nbMaxMissiles = 7;
     protected final int nbMaxBalles = 2000;
     public Fenetre fenetre;
     protected int tempsDepartMissile = 0 ;
@@ -118,25 +118,19 @@ public class Avion extends Objet implements ActionListener, KeyListener{
 
    
     public Missiles tirerMissiles(int t) {
-        if(nbMissiles<nbMaxMissiles) {
-            nbMissiles++;
-            return new Missiles(x + 100 * Math.cos(Math.toRadians(vtheta)),
-                                y + 100 * Math.sin(Math.toRadians(vtheta)),
-                                2.5 * vr, vtheta, h, l, fenetre, Integer.toString(nbMissiles), t
-                               );
-        }
-        return null;
+        nbMissiles++;
+        return new Missiles(x + 100 * Math.cos(Math.toRadians(vtheta)),
+                            y + 100 * Math.sin(Math.toRadians(vtheta)),
+                            2.5 * vr, vtheta, h, l, fenetre, Integer.toString(nbMissiles), t
+                           );
     }
     
     public Mitrailleuse tirerBalles(int t) {
-        if(nbBalles<nbMaxBalles) {
-            nbBalles++;
-            return new Mitrailleuse(x + 100 * Math.cos(Math.toRadians(vtheta)),
-                                    y + 100 * Math.sin(Math.toRadians(vtheta)),
-                                    2 * vr, vtheta, h, l, fenetre, Integer.toString(nbMissiles), t
-                                   );
-        }
-        return null;
+        nbBalles++;
+        return new Mitrailleuse(x + 100 * Math.cos(Math.toRadians(vtheta)),
+                                y + 100 * Math.sin(Math.toRadians(vtheta)),
+                                2 * vr, vtheta, h, l, fenetre, Integer.toString(nbMissiles), t
+                               );
     }
     
     public void accelerer() {
