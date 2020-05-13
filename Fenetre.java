@@ -186,37 +186,39 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         HashSet<Objet> nvObjets = new HashSet<Objet>(); // nouveau objets créés
         HashSet<Objet> ancObjets = new HashSet<Objet>(); // anciens objets détruits
         for(Objet obj: objets){
-            obj.avancer((double) vBackground);
-            obj.tourner();
-            
-            if (obj instanceof AvionBot){//vérifier si l'objet est un bot
-                AvionBot av = (AvionBot) obj;
+            if (obj != null) {
+                obj.avancer((double) vBackground);
+                obj.tourner();
                 
-                if(r%7==0 && r%4==0) { //tirs à tps aléatoires
-                    nvObjets.add(av.tirerMissiles());     
-                }
-                
-                if(p%7==0) { //tirs à tps aléatoires
-                    nvObjets.add(av.tirerBalles());
-                }
-            }
-
-            for (Objet obj2: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
-                // System.out.println(obj2);
-                if (obj != obj2) {
-                    if (obj.collison(obj2)) {
-                        // System.out.println("Collision entre " + obj.toString() + " et " + obj2.toString());
-                        obj.prendreDegats(obj2.getDegats());
-                        obj2.prendreDegats(obj.getDegats());
+                if (obj instanceof AvionBot){//vérifier si l'objet est un bot
+                    AvionBot av = (AvionBot) obj;
+                    
+                    if(r%7==0 && r%4==0) { //tirs à tps aléatoires
+                        nvObjets.add(av.tirerMissiles());     
+                    }
+                    
+                    if(p%7==0) { //tirs à tps aléatoires
+                        nvObjets.add(av.tirerBalles());
                     }
                 }
-            }
 
-            obj.avancer((double) vBackground); // l'objet avance (méthode avancer() commune à tous les objets)
+                for (Objet obj2: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
+                    // System.out.println(obj2);
+                    if (obj != obj2 && obj2 != null) {
+                        if (obj.collison(obj2)) {
+                            // System.out.println("Collision entre " + obj.toString() + " et " + obj2.toString());
+                            obj.prendreDegats(obj2.getDegats());
+                            obj2.prendreDegats(obj.getDegats());
+                        }
+                    }
+                }
 
-            if (obj.getVie() <= 0 || obj.getY() > getHeight() || (obj instanceof Missiles && var1-varMissile>=1500)) {
-                explosions.add(new int[]{(int)obj.getX(), (int)obj.getY(), 10});
-                if (obj != avionJ) ancObjets.add(obj); // on met l'objet dans la liste des objets à supprimer seulement s'il ne s'agit pas de l'vion du joueur
+                obj.avancer((double) vBackground); // l'objet avance (méthode avancer() commune à tous les objets)
+
+                if (obj.getVie() <= 0 || obj.getY() > getHeight() || (obj instanceof Missiles && var1-varMissile>=1500)) {
+                    explosions.add(new int[]{(int)obj.getX(), (int)obj.getY(), 10});
+                    if (obj != avionJ) ancObjets.add(obj); // on met l'objet dans la liste des objets à supprimer seulement s'il ne s'agit pas de l'vion du joueur
+                }
             }
         }
         objets.addAll(nvObjets);

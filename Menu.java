@@ -29,13 +29,13 @@ public class Menu extends JFrame implements ActionListener{
         //this.setLocationRelativeTo(null);
         //this.validate();
         this.setSize(987,593);
-        this.setLocation(450,250); //position de la fenetre sur l'écran
+        this.setLocation(450,250); //position de la fenetre sur l'Ã©cran
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         fenetreMondes=new Mondes();// instanciation de Mondes
         fenetreMagasin=new Magasin();
         Toolkit kit = Toolkit.getDefaultToolkit();
         
-        // Modifier l'icône de JFrame
+        // Modifier l'icÃ´ne de JFrame
         Image img = kit.getImage("icone.jpg");
         setIconImage(img);
         
@@ -108,7 +108,7 @@ public class Menu extends JFrame implements ActionListener{
         if(e.getSource()==jouer) {
             Audio.playSound("/son/click.wav"); 
             //Audio.playSound("/son/song.wav");
-            if(fenetreMondes.FondChoisi.equals(" ") && fenetreMagasin.AvionChoisi.equals(" ")){ //défini le background par défaut
+            if(fenetreMondes.FondChoisi.equals(" ") && fenetreMagasin.AvionChoisi.equals(" ")){ //dÃ©fini le background par dÃ©faut
                 fenetrejeu = new Fenetre(); //appel du 2eme constructeur
                 fenetrejeu.setVisible(true);// rend la fenetre de jeu visible
             }else if(fenetreMondes.FondChoisi.equals(" ")){
