@@ -57,10 +57,15 @@ public abstract class Objet {
     public void tourner(){}
 
     public void dessine(Graphics g) {}
+
+    public void prendreDegats(double ptVie) {
+        this.vie -= ptVie;
+    }
     
+    // getteurs :
     public double getX() {return this.x;}
     public double getY() {return this.y;}
     public double getRayon() {return this.rayon;}
-
-
+    public double getVie() {return this.vie;}
+    public double getDegats() {return this.degats;}
 }

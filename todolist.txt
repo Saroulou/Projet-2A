@@ -4,3 +4,4 @@
 - implements avancer tout droit
 - fusionner les redondances dans les constructeurs de Fenetre
 - bombe avancer
+- durée de vie des missiles/mitrailleuses

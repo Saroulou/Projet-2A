@@ -36,7 +36,6 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private int varMissile=0;// temps initial du lancement de la bombe
     //JLabel explosions = new JLabel(); //contient les images des explosions des missiles
     private int varBalle=0;
-    private int vieBot=10;
     private int scoreFinal;//donne le score final à stocker
     private String texteScore;
     private String avionChoisi=" ";
@@ -163,10 +162,16 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             obj.dessine(g);
         }
 
+        HashSet<int[]> exploFini = new HashSet<int[]>();
         for (int[] coord:explosions) {
             System.out.println(coord[0] + " " + coord[1]);
             g.drawImage(im, coord[0] - 35, coord[1] - 50, null);
+            coord[2] --;
+            if (coord[2] <= 0) {
+                exploFini.add(coord);
+            }
         }
+        explosions.removeAll(exploFini);
     }
 
 
@@ -201,23 +206,23 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 if (obj != obj2) {
                     if (obj.collison(obj2)) {
                         // System.out.println("Collision entre " + obj.toString() + " et " + obj2.toString());
-                        obj.vie -= obj2.degats;
-                        obj2.vie -= obj.degats;
+                        obj.prendreDegats(obj2.getDegats());
+                        obj2.prendreDegats(obj.getDegats());
                     }
                 }
             }
 
             obj.avancer((double) vBackground); // l'objet avance (méthode avancer() commune à tous les objets)
 
-            if (obj.vie <= 0 || obj.y > getHeight() || (obj instanceof Missiles && var1-varMissile>=1500)) {
-                explosions.add(new int[]{(int)obj.getX(), (int)obj.getY()});
+            if (obj.getVie() <= 0 || obj.getY() > getHeight() || (obj instanceof Missiles && var1-varMissile>=1500)) {
+                explosions.add(new int[]{(int)obj.getX(), (int)obj.getY(), 10});
                 if (obj != avionJ) ancObjets.add(obj); // on met l'objet dans la liste des objets à supprimer seulement s'il ne s'agit pas de l'vion du joueur
             }
         }
         objets.addAll(nvObjets);
         objets.removeAll(ancObjets);
         
-        if (avionJ.vie<=0){
+        if (avionJ.getVie()<=0){
             scoreFinal=var1/100; //score final
             timer.stop(); //arreter le timer (figer le jeu)
             JOptionPane jop = new JOptionPane();        
@@ -232,7 +237,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         }
         
         texteScore="Score: "+Integer.toString(var1/100);
-        // System.out.println(avionJ.vie);
+        // System.out.println(avionJ.getVie());
         xBackground -= vBackground; // position actualisée avec la vitesse de l'arrière plan
 
         repaint(); // appel a la methode paint
