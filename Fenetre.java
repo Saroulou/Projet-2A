@@ -265,7 +265,6 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public void keyPressed(KeyEvent e){ 
         int code = e.getKeyCode();
 
-<<<<<<< HEAD
         if (code==KeyEvent.VK_LEFT) {
             avionJ.tourner(-10);
         } else if (code == KeyEvent.VK_RIGHT) {
