@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JOptionPane;
 
 
-
 public class Fenetre extends JFrame implements ActionListener, KeyListener{
     
     // ATTRIBUTS
@@ -164,11 +163,6 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
         for(Objet obj: objets){
             obj.dessine(g);
-            
-            if(obj instanceof Missiles && var1-varMissile>=1500) {
-                obj.exploser(g);
-            }
-            obj.dessine(g);
         }
 
         for (int[] coord:explosions) {
@@ -216,7 +210,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
             obj.avancer((double) vBackground); // l'objet avance (méthode avancer() commune à tous les objets)
 
-            if (obj.vie <= 0 || obj.y > getHeight()) {
+            if (obj.vie <= 0 || obj.y > getHeight() || (obj instanceof Missiles && var1-varMissile>=1500)) {
                 explosions.add(new int[]{(int)obj.getX(), (int)obj.getY()});
                 if (obj != avionJ) ancObjets.add(obj); // on met l'objet dans la liste des objets à supprimer seulement s'il ne s'agit pas de l'vion du joueur
             }

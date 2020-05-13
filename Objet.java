@@ -56,7 +56,6 @@ public abstract class Objet {
 
     public void tourner(){}
 
-    public void exploser(Graphics g) {}
     public void dessine(Graphics g) {}
     
     public double getX() {return this.x;}

@@ -78,9 +78,9 @@ public class Bombe extends Objet {
         
     }
     
-    public boolean estsorti (){
-        return y>h;
-    }
+    // public boolean estsorti (){
+    //     return y>h;
+    // }
     
 }
 

@@ -26,7 +26,6 @@ public class Missiles extends Avion { // héritage à changer
         return "Missile " + this.nom;
     }
     
-    
     public void dessine(Graphics g){
 
          /*int r = this.rayon;
@@ -55,15 +54,6 @@ public class Missiles extends Avion { // héritage à changer
             }
          return img;
     }
-     
-     public void exploser(Graphics g) {
-          
-        g.drawImage(im,(int)(this.x-35),(int)(this.y-50),null);//this.x-x_im/2...
-        
-        //suppresion missile ensuite
-     }
-     
-    
 }
     
     
