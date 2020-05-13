@@ -116,7 +116,7 @@ public class Menu extends JFrame implements ActionListener{
 				fenetrejeu = new Fenetre("Background",fenetreMagasin.AvionChoisi);//appel du 3eme constructeur
 				fenetrejeu.setVisible(true);
 				}else if(fenetreMagasin.AvionChoisi.equals(" ")){
-				fenetrejeu = new Fenetre(fenetreMondes.FondChoisi);//appel du 3eme constructeur
+				fenetrejeu = new Fenetre(fenetreMondes.FondChoisi);//appel du 2eme constructeur
 				fenetrejeu.setVisible(true);
 				}else{
 				fenetrejeu = new Fenetre(fenetreMondes.FondChoisi,fenetreMagasin.AvionChoisi);//appel du 3eme constructeur

@@ -35,7 +35,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private int varBalle=0;
     private int vieBot=10;
     private int scoreFinal;//donne le score final à stocker
-    private String texteScore;
+    private String texteScore="0";
     private String avionChoisi=" ";
 // CONSTRUCTEURS
 
@@ -215,7 +215,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             objets.addAll(av.balles);
 
             for (Objet obj: objets){ // vérifie avec s'il y a une collison avec un autre avion/objet en vérifiant pour chaque autre objet
-                System.out.println(obj);
+                //System.out.println(obj);
                 if (av != obj) {
                     if (av.collison(obj)) {
                         //System.out.println("Collision entre " + av.toString() + " et " + obj.toString());
@@ -239,17 +239,19 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 if(b!=null){
                     System.out.println("Bombe, var1 = "+var1+"varBombe = "+varBombe+"vBackground = "+vBackground);
                     b.avancer(this.var1,varBombe,vBackground); //Ajout du temps dans la méthode tombe/avancer
+                    System.out.println("avance");
                     if(b.estsorti()){
                         av.listebombesuppr.add(b);
 
                         }
 
-                    }
+                   }
 
                 }
                 for (Missiles m: av.missiles) {
                     if (m != null){
                         m.avancer((double) vBackground);
+                        System.out.println("missiles");
                     }
                         if(var1-varMissile>=2000) {
                         av.listemissilesuppr.add(m);
@@ -287,6 +289,20 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
       int option = jop.showConfirmDialog(null, 
         "GAME OVER! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
         "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
+        if (option==JOptionPane.YES_OPTION){
+			this.setVisible(false);	
+		}else if(option==JOptionPane.NO_OPTION){
+			System.exit(0); //arreter le programme
+		}
+	}
+	
+	if (avions.get(1).vie==0){
+		scoreFinal=var1/100; //score final
+			timer.stop(); //arreter le timer (figer le jeu)
+			JOptionPane jop = new JOptionPane();    	
+      int option = jop.showConfirmDialog(null, 
+        "WINN! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
+        "Gagné!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
         if (option==JOptionPane.YES_OPTION){
 			this.setVisible(false);	
 		}else if(option==JOptionPane.NO_OPTION){
