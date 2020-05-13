@@ -119,7 +119,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         timer.start();
         
         objets = new HashSet<Objet>();
-        avionJ = new Avion(getHeight(),getWidth(),this, "Joueur","avionJC");
+        avionJ = new Avion(getHeight(),getWidth(),this, "Joueur",avionChoisi);
         objets.add(avionJ);
         for (int i = 0; i < NB_BOTS; i++) {
             objets.add(new AvionBot(objets,avionJ,getHeight(),getWidth(),this, Integer.toString(i)));
@@ -286,10 +286,3 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     }
     
 }
-
-
-
-
-
-
-
