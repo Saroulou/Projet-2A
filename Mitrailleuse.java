@@ -2,8 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 
-public class Mitrailleuse extends Missiles { // héritage à changer
-    // public int degatMitr=1;
+public class Mitrailleuse extends Missiles {
 
     public Mitrailleuse(double x, double y, double vr, double vtheta, int h, int l,Fenetre fenetre, String nom, int t) {
         super(x, y, vr, vtheta, h, l,fenetre, 5, nom, 1, 0.1, t);

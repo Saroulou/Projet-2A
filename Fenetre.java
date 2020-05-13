@@ -232,21 +232,20 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 System.exit(0); //arreter le programme
             }
         }
-    
-        // à implémenter avec le nouveau système de HashSet
-        // if (avions.get(1).vie==0){
-        //     scoreFinal=var1/100; //score final
-        //     timer.stop(); //arreter le timer (figer le jeu)
-        //     JOptionPane jop = new JOptionPane();        
-        //     int option = jop.showConfirmDialog(null, 
-        //     "WIN! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
-        //     "Gagné!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
-        //     if (option==JOptionPane.YES_OPTION){
-        //         this.dispose(); 
-        //     }else if(option==JOptionPane.NO_OPTION){
-        //         System.exit(0); //arreter le programme
-        //     }
-        // }
+
+        if (aucunBot(objets)){ // s'il n'y a plus de bot, le joueur a gagné
+            scoreFinal=var1/100; //score final
+            timer.stop(); //arreter le timer (figer le jeu)
+            JOptionPane jop = new JOptionPane();        
+            int option = jop.showConfirmDialog(null, 
+            "WIN! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
+            "Gagné!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
+            if (option==JOptionPane.YES_OPTION){
+                this.dispose(); 
+            }else if(option==JOptionPane.NO_OPTION){
+                System.exit(0); //arreter le programme
+            }
+        }
         
         texteScore="Score: "+Integer.toString(var1/100);
         // System.out.println(avionJ.getVie());
@@ -254,6 +253,13 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
 
         repaint(); // appel a la methode paint
          
+    }
+
+    private boolean aucunBot(HashSet<Objet> objets) {
+        for (Objet obj : objets) {
+            if (obj instanceof AvionBot) return false;
+        }
+        return true;
     }
 
     public void keyPressed(KeyEvent e){ 
