@@ -159,7 +159,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         g.drawString(texteScore,850,650);
 
         for(Objet obj: objets){
-            obj.dessine(g);
+            if (obj != null) obj.dessine(g);
         }
 
         HashSet<int[]> exploFini = new HashSet<int[]>();

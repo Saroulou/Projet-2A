@@ -53,7 +53,7 @@ public class Avion extends Objet implements ActionListener, KeyListener{
         this(100,100,10,0,h,l,fenetre, 30, nom);
     }*/
     public Avion(int h,int l,Fenetre fenetre, String nom, String imAvion){
-        this(100,100,10,0,h,l,fenetre, 30, nom, 50, 100);
+        this(100,100,10,0,h,l,fenetre, 30, nom, 1000, 100);
         this.imAvion=imAvion;
         
     }

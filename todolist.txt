@@ -1,7 +1,9 @@
 	- HashSet objets
-- unifier héritage Objet
 	- explosions
-- implements avancer tout droit
+- interface avancer tout droit
 - fusionner les redondances dans les constructeurs de Fenetre
 - bombe avancer
 - durée de vie des missiles/mitrailleuses
+- (unifier héritage Objet)
+- nombre de missiles par avion ?
+- afficher recharge
