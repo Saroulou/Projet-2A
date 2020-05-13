@@ -42,7 +42,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     private String avionChoisi=" ";
 
     Toolkit T = Toolkit.getDefaultToolkit();
-    Image im = T.getImage("explosion-gif-001.gif");
+    Image im = T.getImage("explosion.gif");
 
     // CONSTRUCTEURS
 
@@ -134,20 +134,18 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         addKeyListener(this);
 
         setVisible(true);
-        
-
     }
-// METHODES
+
+    // METHODES
 
     // permet de dessiner l'écran et de rajouter les images "à la suite".
     private void movingBackground(Graphics g){
         if(this.xBackground == -this.largeurBackground){
             this.xBackground = 0;
             }
-        g.drawImage(this.iBackground, this.xBackground, 0, null);
-        g.drawImage(this.iBackground, this.xBackground + this.largeurBackground, 0, null);
-        g.drawImage(this.iBackground, this.xBackground+ this.largeurBackground * 2, 0, null);
-        g.drawImage(this.iBackground, this.xBackground + this.largeurBackground * 3, 0, null);
+        for (int i = 0; i < getWidth()/this.largeurBackground + 2; i++) {
+            g.drawImage(this.iBackground, this.xBackground + this.largeurBackground * i, 0, null);
+        }
     }
 
     public void paint (Graphics g){
@@ -166,6 +164,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         }
 
         for (int[] coord:explosions) {
+            System.out.println(coord[0] + " " + coord[1]);
             g.drawImage(im, coord[0] - 35, coord[1] - 50, null);
         }
     }
@@ -201,7 +200,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
                 // System.out.println(obj2);
                 if (obj != obj2) {
                     if (obj.collison(obj2)) {
-                        System.out.println("Collision entre " + obj.toString() + " et " + obj2.toString());
+                        // System.out.println("Collision entre " + obj.toString() + " et " + obj2.toString());
                         obj.vie -= obj2.degats;
                         obj2.vie -= obj.degats;
                     }
@@ -264,9 +263,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         }
     }
 
-
     public void keyReleased(KeyEvent e){}
-    
     public void keyTyped(KeyEvent e){}
     
     public static void main (String[] args) {     
