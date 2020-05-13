@@ -29,7 +29,7 @@ public Magasin () {
 			this.setLayout(null);
 			this.setResizable(false);
 			this.setSize(987,593);
-			this.setLocation(200,200); //position de la fenetre sur l'écran
+			this.setLocation(450,250); //position de la fenetre sur l'écran
 			
 			Toolkit kit = Toolkit.getDefaultToolkit();
 			
@@ -144,28 +144,40 @@ public Magasin () {
 
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource()==Avion1) {
+				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion1.getText();
 				System.out.println(AvionChoisi);
+				this.dispose();
 			}
 			if(e.getSource()==Avion2) {
+				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion2.getText();
 				System.out.println(AvionChoisi);
+				this.dispose();
 			}
 			if(e.getSource()==Avion3) {
+				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion3.getText();
 				System.out.println(AvionChoisi);
+				this.dispose();
 			}	
 			if(e.getSource()==Avion4) {
+				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion4.getText();
 				System.out.println(AvionChoisi);
+				this.dispose();
 			}
 			if(e.getSource()==Avion5) {
+				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion5.getText();
 				System.out.println(AvionChoisi);
+				this.dispose();
 			}
 			if(e.getSource()==Avion6) {
+				Audio.playSound("/son/click.wav");
 				AvionChoisi=Avion6.getText();
 				System.out.println(AvionChoisi);
+				this.dispose(); //Rendre la fenetre invisible après le clic
 			}
 				
 		}

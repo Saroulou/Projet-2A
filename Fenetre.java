@@ -37,7 +37,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     //JLabel explosions = new JLabel(); //contient les images des explosions des missiles
     private int varBalle=0;
     private int scoreFinal;//donne le score final à stocker
-    private String texteScore;
+    private String texteScore="0";
     private String avionChoisi=" ";
 
     Toolkit T = Toolkit.getDefaultToolkit();
@@ -53,7 +53,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         this.xBackground=0;
        
         setSize(width, height);
-        setLocation(0,100);
+        setLocation(200,200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         
@@ -223,6 +223,7 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
         objets.removeAll(ancObjets);
         
         if (avionJ.getVie()<=0){
+            Audio.playSound("/son/gameover.wav"); 
             scoreFinal=var1/100; //score final
             timer.stop(); //arreter le timer (figer le jeu)
             JOptionPane jop = new JOptionPane();        
@@ -230,11 +231,28 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
             "GAME OVER! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
             "Game over", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
             if (option==JOptionPane.YES_OPTION){
-                this.setVisible(false); 
+                Audio.playSound("/son/click.wav");
+                this.dispose();
             }else if(option==JOptionPane.NO_OPTION){
+                Audio.playSound("/son/click.wav");
                 System.exit(0); //arreter le programme
             }
         }
+    
+        // à implémenter avec le nouveau système de HashSet
+        // if (avions.get(1).vie==0){
+        //     scoreFinal=var1/100; //score final
+        //     timer.stop(); //arreter le timer (figer le jeu)
+        //     JOptionPane jop = new JOptionPane();        
+        //     int option = jop.showConfirmDialog(null, 
+        //     "WIN! Score : "+Integer.toString(scoreFinal)+"\n"+" Rejouer ?", 
+        //     "Gagné!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE); //création boite de dialogue
+        //     if (option==JOptionPane.YES_OPTION){
+        //         this.dispose(); 
+        //     }else if(option==JOptionPane.NO_OPTION){
+        //         System.exit(0); //arreter le programme
+        //     }
+        // }
         
         texteScore="Score: "+Integer.toString(var1/100);
         // System.out.println(avionJ.getVie());
@@ -247,23 +265,28 @@ public class Fenetre extends JFrame implements ActionListener, KeyListener{
     public void keyPressed(KeyEvent e){ 
         int code = e.getKeyCode();
 
+<<<<<<< HEAD
         if (code==KeyEvent.VK_LEFT) {
             avionJ.tourner(-10);
         } else if (code == KeyEvent.VK_RIGHT) {
             avionJ.tourner(10);
         } else if (code==KeyEvent.VK_DOWN) {
+        Audio.playSound("/son/bombe.wav");
             avionJ.tirerBombe();
             varBombe=var1;
         } if (code == KeyEvent.VK_SPACE) {
+            Audio.playSound("/son/missile.wav");
             objets.add(avionJ.tirerMissiles());
             varMissile=var1;// Temps de lancement initial quand on appuie sur la touche;
         }
         if(code == KeyEvent.VK_W) {
+            Audio.playSound("/son/balles.wav");
             objets.add(avionJ.tirerBalles());
             varBalle=var1;
-            }
+        }
             
         if(code == KeyEvent.VK_UP) {
+            Audio.playSound("/son/boost.wav");
             avionJ.accelerer();
         }
     }

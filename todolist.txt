@@ -7,3 +7,4 @@
 - (unifier héritage Objet)
 - nombre de missiles par avion ?
 - afficher recharge
+- victoire du joueur quand il n'y a plus d'avion bot
